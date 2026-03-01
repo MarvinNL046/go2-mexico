@@ -1,51 +1,73 @@
 import Link from 'next/link';
+import { ChevronRight, Home } from 'lucide-react';
 import { siteConfig } from '../site.config';
 
-interface BreadcrumbItem {
-  name: string;
-  href: string;
-}
-
 interface BreadcrumbsProps {
-  items: BreadcrumbItem[];
+  items: Array<{ label?: string; name?: string; href?: string }>;
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
+  // Normalize items: support both 'label' and legacy 'name' prop
+  const normalizedItems = items.map((item) => ({
+    label: item.label || item.name || '',
+    href: item.href,
+  }));
+
+  // Build JSON-LD BreadcrumbList schema
+  const schemaItems = normalizedItems.map((item, i) => ({
+    '@type': 'ListItem' as const,
+    position: i + 1,
+    name: item.label,
+    ...(item.href
+      ? { item: `${siteConfig.seo.siteUrl}${item.href}` }
+      : {}),
+  }));
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: schemaItems,
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": items.map((item, i) => ({
-              "@type": "ListItem",
-              "position": i + 1,
-              "name": item.name,
-              "item": `${siteConfig.seo.siteUrl}${item.href}`
-            }))
-          })
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <nav className="flex mb-6" aria-label="Breadcrumb">
-        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          {items.map((item, index) => (
-            <li key={index} className="inline-flex items-center">
-              {index > 0 && (
-                <svg className="w-6 h-6 text-gray-400 mx-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                </svg>
-              )}
-              {index === items.length - 1 ? (
-                <span className="text-gray-500 text-sm font-medium">{item.name}</span>
-              ) : (
-                <Link href={item.href} className="text-brand-secondary hover:text-brand-primary text-sm font-medium transition-colors">
-                  {item.name}
-                </Link>
-              )}
-            </li>
-          ))}
+        <ol className="inline-flex items-center flex-wrap gap-1 text-sm">
+          {normalizedItems.map((item, index) => {
+            const isLast = index === normalizedItems.length - 1;
+            const isFirst = index === 0;
+
+            return (
+              <li key={index} className="inline-flex items-center">
+                {index > 0 && (
+                  <ChevronRight className="w-3.5 h-3.5 text-gray-400 mx-1 flex-shrink-0" />
+                )}
+
+                {isLast ? (
+                  <span className="text-gray-500 font-medium truncate max-w-[200px] sm:max-w-none">
+                    {item.label}
+                  </span>
+                ) : item.href ? (
+                  <Link
+                    href={item.href}
+                    className="inline-flex items-center gap-1 text-brand-secondary hover:text-brand-primary font-medium transition-colors duration-200"
+                  >
+                    {isFirst && <Home className="w-3.5 h-3.5" />}
+                    <span>{item.label}</span>
+                  </Link>
+                ) : (
+                  <span className="text-gray-500 font-medium">
+                    {isFirst && <Home className="w-3.5 h-3.5 inline mr-1" />}
+                    {item.label}
+                  </span>
+                )}
+              </li>
+            );
+          })}
         </ol>
       </nav>
     </>
