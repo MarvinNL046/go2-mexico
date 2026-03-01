@@ -29,11 +29,11 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center group" onClick={closeMobileMenu}>
             <Image
-              src="/images/logo.svg"
+              src="/images/logo.png"
               alt={siteConfig.name}
-              width={180}
-              height={32}
-              className="h-8 w-auto transition-transform duration-300 group-hover:scale-105"
+              width={200}
+              height={36}
+              className="h-9 w-auto transition-transform duration-300 group-hover:scale-105"
               priority
             />
           </Link>
