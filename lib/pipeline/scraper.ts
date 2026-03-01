@@ -9,7 +9,7 @@
  * Search is handled exclusively by Jina Search.
  */
 
-const TIMEOUT_MS = 15_000;
+const TIMEOUT_MS = 30_000;
 
 // ---------------------------------------------------------------------------
 // Preferred Mexico travel sources (used when building research queries)

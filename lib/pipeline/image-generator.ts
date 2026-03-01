@@ -1,5 +1,5 @@
 const GEMINI_API_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent';
 
 const MEXICO_STYLE_MAP: Record<string, string> = {
   'city-guide': 'colorful Mexican colonial architecture, vibrant streets, painted buildings',
