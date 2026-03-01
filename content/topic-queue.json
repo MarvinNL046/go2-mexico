@@ -1,0 +1,375 @@
+{
+  "topics": [
+    {
+      "id": "mexico-city-street-food-guide",
+      "title": "Ultimate Mexico City Street Food Guide: What to Eat & Where",
+      "category": "food",
+      "priority": 1,
+      "keywords": ["mexico city street food", "CDMX food guide", "best tacos mexico city"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/articles/best-street-food-mexico-city",
+        "https://www.timeout.com/mexico-city/restaurants/best-street-food-in-mexico-city"
+      ],
+      "city": "Mexico City",
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "cancun-all-inclusive-vs-independent",
+      "title": "Cancun: All-Inclusive Resort vs Independent Travel Compared",
+      "category": "budget",
+      "priority": 1,
+      "keywords": ["cancun all inclusive", "cancun budget travel", "cancun independent travel"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/mexico/yucatan-peninsula/cancun"
+      ],
+      "city": "Cancun",
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "oaxaca-mezcal-guide",
+      "title": "The Complete Guide to Mezcal in Oaxaca: Distilleries, Tastings & Tours",
+      "category": "food",
+      "priority": 1,
+      "keywords": ["oaxaca mezcal", "mezcal tour oaxaca", "best mezcal brands"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/mexico/oaxaca-state/oaxaca"
+      ],
+      "city": "Oaxaca",
+      "region": "Oaxaca & Chiapas",
+      "status": "pending"
+    },
+    {
+      "id": "tulum-cenotes-guide",
+      "title": "Best Cenotes Near Tulum: Complete Swimming & Diving Guide",
+      "category": "activities",
+      "priority": 1,
+      "keywords": ["tulum cenotes", "best cenotes yucatan", "cenote swimming guide"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/mexico/yucatan-peninsula/tulum"
+      ],
+      "city": "Tulum",
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "playa-del-carmen-nightlife",
+      "title": "Playa del Carmen Nightlife Guide: Best Bars, Clubs & 5th Avenue",
+      "category": "city-guide",
+      "priority": 2,
+      "keywords": ["playa del carmen nightlife", "quinta avenida bars", "playa del carmen clubs"],
+      "scrapeUrls": [],
+      "city": "Playa del Carmen",
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-rainy-season-travel",
+      "title": "Traveling Mexico in Rainy Season: What to Expect Month by Month",
+      "category": "seasonal",
+      "priority": 2,
+      "keywords": ["mexico rainy season", "when to visit mexico", "mexico weather by month"],
+      "scrapeUrls": [
+        "https://www.visitmexico.com/en/weather"
+      ],
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "guadalajara-city-guide",
+      "title": "Guadalajara Travel Guide: Mexico's Cultural Capital",
+      "category": "city-guide",
+      "priority": 2,
+      "keywords": ["guadalajara travel guide", "things to do guadalajara", "guadalajara attractions"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/mexico/western-central-highlands/guadalajara"
+      ],
+      "city": "Guadalajara",
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "san-miguel-de-allende-expat-guide",
+      "title": "Living in San Miguel de Allende: The Complete Expat Guide",
+      "category": "practical",
+      "priority": 2,
+      "keywords": ["san miguel de allende expat", "living in san miguel", "retire in mexico"],
+      "scrapeUrls": [
+        "https://www.mexiconewsdaily.com"
+      ],
+      "city": "San Miguel de Allende",
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "baja-california-road-trip",
+      "title": "Baja California Road Trip: Tijuana to Cabo in 10 Days",
+      "category": "activities",
+      "priority": 2,
+      "keywords": ["baja california road trip", "baja sur itinerary", "driving baja mexico"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/mexico/baja-california"
+      ],
+      "region": "Baja California",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-backpacking-budget",
+      "title": "Backpacking Mexico on $30/Day: Complete Budget Breakdown",
+      "category": "budget",
+      "priority": 1,
+      "keywords": ["backpacking mexico budget", "mexico travel costs", "cheap travel mexico"],
+      "scrapeUrls": [],
+      "status": "pending"
+    },
+    {
+      "id": "chichen-itza-complete-guide",
+      "title": "Visiting Chichen Itza: Tickets, Best Time & Tips to Beat the Crowds",
+      "category": "activities",
+      "priority": 1,
+      "keywords": ["chichen itza guide", "chichen itza tickets", "chichen itza tips"],
+      "scrapeUrls": [
+        "https://www.visitmexico.com/en/yucatan/chichen-itza"
+      ],
+      "city": "Valladolid",
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "puerto-vallarta-beaches",
+      "title": "Best Beaches in Puerto Vallarta & Riviera Nayarit",
+      "category": "beaches",
+      "priority": 2,
+      "keywords": ["puerto vallarta beaches", "riviera nayarit beaches", "best beaches pacific mexico"],
+      "scrapeUrls": [],
+      "city": "Puerto Vallarta",
+      "region": "Pacific Coast",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-safety-tips-2026",
+      "title": "Is Mexico Safe in 2026? Honest Safety Guide by Region",
+      "category": "practical",
+      "priority": 1,
+      "keywords": ["mexico safety 2026", "is mexico safe", "mexico travel safety tips"],
+      "scrapeUrls": [
+        "https://www.mexiconewsdaily.com"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "day-of-dead-where-to-celebrate",
+      "title": "Where to Celebrate Day of the Dead in Mexico: Beyond Oaxaca",
+      "category": "seasonal",
+      "priority": 3,
+      "keywords": ["day of the dead mexico", "dia de muertos where to go", "day of dead oaxaca"],
+      "scrapeUrls": [
+        "https://www.visitmexico.com/en/day-of-the-dead"
+      ],
+      "city": "Oaxaca",
+      "region": "Oaxaca & Chiapas",
+      "status": "pending"
+    },
+    {
+      "id": "merida-guide",
+      "title": "Merida Travel Guide: The Safest City in Mexico",
+      "category": "city-guide",
+      "priority": 2,
+      "keywords": ["merida travel guide", "things to do merida", "merida yucatan"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/mexico/yucatan-peninsula/merida"
+      ],
+      "city": "Merida",
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "mexican-tacos-regional-guide",
+      "title": "Mexican Tacos by Region: From Al Pastor to Birria",
+      "category": "food",
+      "priority": 2,
+      "keywords": ["types of mexican tacos", "best tacos mexico", "regional tacos guide"],
+      "scrapeUrls": [],
+      "status": "pending"
+    },
+    {
+      "id": "copper-canyon-guide",
+      "title": "Copper Canyon (Barrancas del Cobre): Mexico's Grand Canyon by Train",
+      "category": "activities",
+      "priority": 3,
+      "keywords": ["copper canyon mexico", "chepe train", "barrancas del cobre"],
+      "scrapeUrls": [
+        "https://www.lonelyplanet.com/mexico/northwest-mexico/copper-canyon"
+      ],
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-digital-nomad-visas",
+      "title": "Mexico Digital Nomad Guide: Visas, Costs & Best Cities in 2026",
+      "category": "practical",
+      "priority": 1,
+      "keywords": ["mexico digital nomad visa", "work remotely mexico", "digital nomad mexico 2026"],
+      "scrapeUrls": [
+        "https://www.mexiconewsdaily.com"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "guanajuato-city-guide",
+      "title": "Guanajuato Travel Guide: Colorful Colonial Gem of Mexico",
+      "category": "city-guide",
+      "priority": 3,
+      "keywords": ["guanajuato travel guide", "things to do guanajuato", "guanajuato mexico"],
+      "scrapeUrls": [],
+      "city": "Guanajuato",
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-airport-guide-cdmx",
+      "title": "Mexico City Airport Guide: AIFA vs MEX, Transport & Tips",
+      "category": "practical",
+      "priority": 2,
+      "keywords": ["mexico city airport guide", "AIFA airport", "benito juarez airport"],
+      "scrapeUrls": [],
+      "city": "Mexico City",
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "yucatan-peninsula-itinerary",
+      "title": "2 Weeks in the Yucatan Peninsula: The Perfect Itinerary",
+      "category": "activities",
+      "priority": 2,
+      "keywords": ["yucatan itinerary", "yucatan peninsula travel", "2 weeks yucatan"],
+      "scrapeUrls": [],
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "mexican-coffee-guide",
+      "title": "Mexican Coffee Guide: From Chiapas Beans to Cafe de Olla",
+      "category": "food",
+      "priority": 3,
+      "keywords": ["mexican coffee", "chiapas coffee", "cafe de olla"],
+      "scrapeUrls": [],
+      "region": "Oaxaca & Chiapas",
+      "status": "pending"
+    },
+    {
+      "id": "riviera-maya-vs-riviera-nayarit",
+      "title": "Riviera Maya vs Riviera Nayarit: Which Mexican Coast to Choose?",
+      "category": "beaches",
+      "priority": 2,
+      "keywords": ["riviera maya vs nayarit", "caribbean vs pacific mexico", "best coast mexico"],
+      "scrapeUrls": [],
+      "status": "pending"
+    },
+    {
+      "id": "mexico-spanish-phrases",
+      "title": "50 Essential Spanish Phrases for Traveling in Mexico",
+      "category": "practical",
+      "priority": 3,
+      "keywords": ["spanish phrases mexico", "mexican spanish", "travel spanish mexico"],
+      "scrapeUrls": [],
+      "status": "pending"
+    },
+    {
+      "id": "holbox-island-guide",
+      "title": "Isla Holbox Guide: Mexico's Car-Free Island Paradise",
+      "category": "beaches",
+      "priority": 2,
+      "keywords": ["isla holbox guide", "holbox island mexico", "how to get to holbox"],
+      "scrapeUrls": [],
+      "city": "Holbox",
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-christmas-new-year",
+      "title": "Christmas & New Year in Mexico: Traditions, Events & Where to Go",
+      "category": "seasonal",
+      "priority": 3,
+      "keywords": ["christmas mexico", "new year mexico", "mexico holiday traditions"],
+      "scrapeUrls": [],
+      "status": "pending"
+    },
+    {
+      "id": "chiapas-adventure-guide",
+      "title": "Chiapas Adventure Guide: Waterfalls, Ruins & Indigenous Culture",
+      "category": "activities",
+      "priority": 3,
+      "keywords": ["chiapas travel guide", "palenque ruins", "agua azul waterfalls"],
+      "scrapeUrls": [],
+      "region": "Oaxaca & Chiapas",
+      "status": "pending"
+    },
+    {
+      "id": "mexican-tequila-trail",
+      "title": "The Tequila Trail: Distillery Tours from Guadalajara",
+      "category": "food",
+      "priority": 3,
+      "keywords": ["tequila trail guadalajara", "tequila distillery tour", "tequila jalisco"],
+      "scrapeUrls": [],
+      "city": "Guadalajara",
+      "region": "Central Mexico",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-scuba-diving-guide",
+      "title": "Scuba Diving in Mexico: Best Dive Sites & Cenote Diving",
+      "category": "activities",
+      "priority": 3,
+      "keywords": ["scuba diving mexico", "cenote diving", "cozumel diving"],
+      "scrapeUrls": [],
+      "region": "Yucatan Peninsula",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-health-insurance-travel",
+      "title": "Travel Insurance for Mexico: What You Need & Best Plans",
+      "category": "practical",
+      "priority": 2,
+      "keywords": ["mexico travel insurance", "health insurance mexico", "best travel insurance mexico"],
+      "scrapeUrls": [],
+      "status": "pending"
+    },
+    {
+      "id": "sayulita-surf-guide",
+      "title": "Sayulita Surf Guide: Learn to Surf on Mexico's Pacific Coast",
+      "category": "beaches",
+      "priority": 3,
+      "keywords": ["sayulita surfing", "learn to surf mexico", "sayulita guide"],
+      "scrapeUrls": [],
+      "city": "Sayulita",
+      "region": "Pacific Coast",
+      "status": "pending"
+    },
+    {
+      "id": "mexico-spring-break-alternatives",
+      "title": "Beyond Cancun: 8 Alternative Spring Break Destinations in Mexico",
+      "category": "seasonal",
+      "priority": 3,
+      "keywords": ["mexico spring break", "alternative spring break mexico", "spring break beyond cancun"],
+      "scrapeUrls": [],
+      "status": "pending"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2026-03-01",
+    "totalTopics": 32,
+    "categoryCounts": {
+      "city-guide": 4,
+      "food": 5,
+      "activities": 6,
+      "practical": 5,
+      "budget": 2,
+      "seasonal": 4,
+      "beaches": 4,
+      "culture": 0,
+      "nature": 0
+    }
+  }
+}

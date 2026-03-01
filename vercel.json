@@ -1,0 +1,28 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/generate-blog",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/generate-blog",
+      "schedule": "0 12 * * *"
+    },
+    {
+      "path": "/api/cron/generate-blog",
+      "schedule": "0 18 * * *"
+    },
+    {
+      "path": "/api/cron/translate-blog",
+      "schedule": "30 6 * * *"
+    },
+    {
+      "path": "/api/cron/translate-blog",
+      "schedule": "30 12 * * *"
+    },
+    {
+      "path": "/api/cron/translate-blog",
+      "schedule": "30 18 * * *"
+    }
+  ]
+}
