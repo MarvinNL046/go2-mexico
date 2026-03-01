@@ -27,20 +27,15 @@ const Header = () => {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-18">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group" onClick={closeMobileMenu}>
-            <div className="h-12 w-12 relative transition-transform duration-300 group-hover:scale-105">
-              <Image
-                src="/images/logo.webp"
-                alt={siteConfig.tagline}
-                height={48}
-                width={48}
-                className="object-contain"
-                priority
-              />
-            </div>
-            <span className="text-lg font-bold text-brand-secondary hidden sm:block tracking-tight">
-              {siteConfig.name}
-            </span>
+          <Link href="/" className="flex items-center group" onClick={closeMobileMenu}>
+            <Image
+              src="/images/logo.svg"
+              alt={siteConfig.name}
+              width={180}
+              height={32}
+              className="h-8 w-auto transition-transform duration-300 group-hover:scale-105"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
