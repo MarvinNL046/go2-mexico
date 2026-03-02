@@ -69,8 +69,9 @@ export default function Home({
       </SEOHead>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-brand-secondary via-brand-secondary-800 to-brand-primary min-h-[65vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-black/20" />
+      <section className="relative min-h-[65vh] flex items-center overflow-hidden">
+        <Image src="/images/heroes/mexico-hero.webp" alt="Colorful aerial view of Guanajuato, Mexico" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
             {t('hero.title')}
@@ -453,8 +454,10 @@ export default function Home({
       )}
 
       {/* CTA Section with Affiliate Booking */}
-      <section className="py-16 bg-gradient-to-br from-brand-primary via-brand-primary-700 to-brand-secondary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 overflow-hidden">
+        <Image src="/images/heroes/cta-hero.webp" alt="Beautiful Mexican beach at sunset" fill className="object-cover" />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
               {t('sections.readyToExplore')}

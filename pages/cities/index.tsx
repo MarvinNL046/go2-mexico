@@ -37,8 +37,9 @@ export default function CitiesIndex({ cities, regions }: CitiesIndexProps) {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-brand-secondary via-brand-secondary-800 to-brand-primary min-h-[35vh] flex items-center">
-        <div className="absolute inset-0 bg-black/10" />
+      <section className="relative min-h-[35vh] flex items-center">
+        <Image src="/images/heroes/cities-hero.webp" alt="Colonial street architecture in Mexico" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             {t('sections.popularCities')}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import { Mail, MessageSquare, MapPin, Send } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -29,8 +30,9 @@ export default function Contact() {
       />
 
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-brand-secondary via-brand-secondary-800 to-brand-primary min-h-[25vh] flex items-center">
-        <div className="absolute inset-0 bg-black/10" />
+      <section className="relative min-h-[25vh] flex items-center">
+        <Image src="/images/heroes/contact-hero.webp" alt="Welcoming town scene in Mexico" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             {t('nav.contact')}

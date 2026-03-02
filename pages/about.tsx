@@ -18,8 +18,9 @@ export default function About() {
       />
 
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-brand-primary via-brand-primary-700 to-brand-secondary min-h-[30vh] flex items-center">
-        <div className="absolute inset-0 bg-black/10" />
+      <section className="relative min-h-[30vh] flex items-center">
+        <Image src="/images/heroes/about-hero.webp" alt="Vibrant Mexican market and culture" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             About {siteConfig.name}

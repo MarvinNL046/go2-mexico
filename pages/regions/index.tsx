@@ -24,8 +24,9 @@ export default function RegionsIndex({ regions }: RegionsIndexProps) {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-brand-primary via-brand-primary-700 to-brand-secondary min-h-[40vh] flex items-center">
-        <div className="absolute inset-0 bg-black/20" />
+      <section className="relative min-h-[40vh] flex items-center">
+        <Image src="/images/heroes/regions-hero.webp" alt="Aerial view of Mexican landscape" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             {t('sections.exploreRegions')}
