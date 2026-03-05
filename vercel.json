@@ -2,27 +2,19 @@
   "crons": [
     {
       "path": "/api/cron/generate-blog",
-      "schedule": "0 6 * * *"
+      "schedule": "0 9 * * 1"
     },
     {
       "path": "/api/cron/generate-blog",
-      "schedule": "0 12 * * *"
-    },
-    {
-      "path": "/api/cron/generate-blog",
-      "schedule": "0 18 * * *"
+      "schedule": "0 9 * * 4"
     },
     {
       "path": "/api/cron/translate-blog",
-      "schedule": "30 6 * * *"
+      "schedule": "0 10 * * 1"
     },
     {
       "path": "/api/cron/translate-blog",
-      "schedule": "30 12 * * *"
-    },
-    {
-      "path": "/api/cron/translate-blog",
-      "schedule": "30 18 * * *"
+      "schedule": "0 10 * * 4"
     }
   ]
 }
