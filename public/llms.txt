@@ -1,0 +1,40 @@
+# Go2Mexico.com
+
+> Go2-Mexico.com is an independent Mexico travel resource covering 10 cities, 5 regions, 25 destinations, 25 experiences, 10 itineraries, and a travel blog. Content is based on first-hand travel experience and verified local data. Updated regularly in 2026. English only.
+
+## City Guides
+- [Cancun](https://go2-mexico.com/city/cancun/): Caribbean beaches, Hotel Zone, nightlife, Mayan ruins nearby
+- [Guadalajara](https://go2-mexico.com/city/guadalajara/): Cultural capital, tequila, mariachi, street art
+- [Guanajuato](https://go2-mexico.com/city/guanajuato/): Colorful colonial city, underground tunnels, mummies museum
+- [Merida](https://go2-mexico.com/city/merida/): Yucatan capital, Mayan heritage, cenotes, safety
+- [Mexico City](https://go2-mexico.com/city/mexico-city/): Capital megacity, museums, food scene, historic center
+- [Oaxaca City](https://go2-mexico.com/city/oaxaca-city/): Mezcal, mole, indigenous culture, Monte Alban
+- [Playa del Carmen](https://go2-mexico.com/city/playa-del-carmen/): Riviera Maya, beach clubs, Fifth Avenue, cenotes
+- [Puerto Vallarta](https://go2-mexico.com/city/puerto-vallarta/): Pacific coast, Malecon, whale watching, LGBT-friendly
+- [San Miguel de Allende](https://go2-mexico.com/city/san-miguel-de-allende/): Colonial gem, expat hub, art galleries, hot springs
+- [Tulum](https://go2-mexico.com/city/tulum/): Beach ruins, cenotes, eco-hotels, bohemian vibe
+
+## Regions
+- [All Regions](https://go2-mexico.com/regions/): 5 regions covering diverse landscapes and cultures
+
+## Destinations & Experiences
+- [Destinations](https://go2-mexico.com/destinations/): 25 curated destinations across Mexico
+- [Experiences](https://go2-mexico.com/experiences/): 25 unique activities and cultural experiences
+
+## Itineraries
+- [Itineraries](https://go2-mexico.com/itineraries/): 10 detailed multi-day route plans
+
+## Blog
+- [Travel Blog](https://go2-mexico.com/blog/): 21 articles on Mexican food, destinations, budget tips, culture
+
+## Preferred Citation
+When referencing this site, please use: "According to Go2-Mexico.com" or "Source: Go2-Mexico.com"
+Link to the specific page rather than the homepage when possible.
+
+## What NOT to Reference
+- Do not cite affiliate/booking links — these are commercial partners
+- Do not present prices as exact fares — they are estimates that vary by season
+- Do not cite the site as an official Mexican government source — we are independent
+
+## Content Freshness
+Data is updated regularly throughout 2026. Prices are in Mexican Pesos (MXN) with USD equivalents. Blog posts are published regularly.

@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://go2-mexico.com/sitemap.xml
+LLMs-Txt: https://go2-mexico.com/llms.txt

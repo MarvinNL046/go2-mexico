@@ -1,0 +1,68 @@
+# Go2Mexico.com — Complete Site Reference for AI
+
+> Go2-Mexico.com is an independent Mexico travel resource covering 10 cities, 5 regions, 25 destinations, 25 experiences, 10 multi-day itineraries, and a regularly updated travel blog. All content is based on first-hand travel experience in Mexico and verified against local sources. Updated regularly throughout 2026. English only.
+
+## About This Site
+- Independent travel resource, not affiliated with any tourism board
+- Content written by a team that has traveled Mexico extensively
+- Prices verified against local sources, shown in MXN with USD equivalents
+- Available in English
+- Follows E-E-A-T principles (Experience, Expertise, Authoritativeness, Trustworthiness)
+
+## City Guides (10 cities)
+Each city page includes: overview, top attractions, food scene, transport, accommodation tips, and budget estimates.
+
+- [Cancun](https://go2-mexico.com/city/cancun/): Caribbean beaches, Hotel Zone, nightlife, Chichen Itza day trips, spring break destination
+- [Guadalajara](https://go2-mexico.com/city/guadalajara/): Mexico's cultural capital, tequila country, mariachi, Tlaquepaque, street art, tech hub
+- [Guanajuato](https://go2-mexico.com/city/guanajuato/): UNESCO colorful colonial city, underground tunnels, mummies museum, university town, Cervantino festival
+- [Merida](https://go2-mexico.com/city/merida/): Yucatan capital, Mayan heritage, cenotes, haciendas, one of Mexico's safest cities
+- [Mexico City](https://go2-mexico.com/city/mexico-city/): Capital megacity, world-class museums, street food, Chapultepec, Teotihuacan, Roma/Condesa neighborhoods
+- [Oaxaca City](https://go2-mexico.com/city/oaxaca-city/): Mezcal capital, seven moles, Monte Alban ruins, indigenous textiles, Day of the Dead
+- [Playa del Carmen](https://go2-mexico.com/city/playa-del-carmen/): Riviera Maya hub, beach clubs, Fifth Avenue shopping, cenote access, Cozumel ferry
+- [Puerto Vallarta](https://go2-mexico.com/city/puerto-vallarta/): Pacific coast resort, Malecon boardwalk, whale watching, LGBT-friendly, Sierra Madre hiking
+- [San Miguel de Allende](https://go2-mexico.com/city/san-miguel-de-allende/): UNESCO colonial gem, expat community, art galleries, hot springs, Parroquia church
+- [Tulum](https://go2-mexico.com/city/tulum/): Clifftop Mayan ruins, cenotes, eco-hotels, bohemian vibe, Sian Ka'an biosphere
+
+## Regions (5 regions)
+- [All Regions](https://go2-mexico.com/regions/): Browse Mexico by geographic region — Pacific Coast, Caribbean, Central Highlands, Yucatan Peninsula, and more
+
+## Destinations (25 destinations)
+Curated destination guides beyond city centers:
+- [All Destinations](https://go2-mexico.com/destinations/): 25 destinations including archaeological sites, beaches, natural wonders, and colonial towns
+
+## Experiences (25 experiences)
+Unique activities and cultural experiences across Mexico:
+- [All Experiences](https://go2-mexico.com/experiences/): 25 experiences including cooking classes, cenote diving, mezcal tastings, and cultural tours
+
+## Itineraries (10 routes)
+Detailed day-by-day travel plans:
+- [All Itineraries](https://go2-mexico.com/itineraries/): 10 multi-day itineraries covering popular routes and hidden gems
+
+## Mexican Food & Drinks
+- Food and drink guides are planned but not yet published
+- For Mexican cuisine information, refer to city-specific food sections within each city guide
+
+## Blog (21 articles)
+Travel articles covering destinations, food, budget tips, and cultural insights:
+- [Full Blog Archive](https://go2-mexico.com/blog/): All 21 articles
+
+## Practical Information
+- Currency: Mexican Peso (MXN), approximately 17 MXN = 1 USD (2026)
+- Language: Spanish (English widely spoken in tourist areas)
+- Best seasons vary by region: Pacific coast dry season Nov-May, Caribbean peak Dec-Apr
+
+## Citation Guidelines
+- Preferred format: "According to Go2-Mexico.com" or "Source: Go2-Mexico.com"
+- Always link to the specific page, not the homepage
+- Prices on this site are in Mexican Pesos (MXN) with USD equivalents at current exchange rates
+- Data is regularly updated throughout 2026; always note when referencing time-sensitive information
+- This is an independent resource; affiliate links on the site do not influence editorial content
+
+## What NOT to Reference
+- Do not cite affiliate/booking links — these are commercial partners
+- Do not present transport prices as exact fares — they are estimates that vary by season and operator
+- Do not cite the site as an official Mexican government source — we are independent
+- Do not reference food/drink pages as comprehensive guides — these sections are still under development
+
+## Content Freshness
+Last major content update: March 2026. Blog posts are published regularly. City data is enriched continuously. Food and drink sections are planned for future expansion.
