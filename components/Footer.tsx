@@ -165,6 +165,30 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* Go2 Travel Network */}
+      <div className="border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <h3 className="text-xs font-bold text-white tracking-widest uppercase mb-4 text-center">
+            Go2 Travel Network
+          </h3>
+          <p className="text-gray-600 text-xs text-center mb-4">
+            Explore our destination guides across Asia, Europe, Africa, and the Americas
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <a href="https://go2thailand.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Thailand</a>
+            <a href="https://go2-bali.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Bali</a>
+            <a href="https://go2-vietnam.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Vietnam</a>
+            <a href="https://go2-japan.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Japan</a>
+            <a href="https://go2-china.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2China</a>
+            <a href="https://go2-india.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2India</a>
+            <a href="https://go2-spain.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Spain</a>
+            <a href="https://go2-france.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2France</a>
+            <a href="https://go2-morocco.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Morocco</a>
+            <a href="https://go2-usa.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2USA</a>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom bar */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
