@@ -16,6 +16,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import EmailCapture from '../components/EmailCapture';
 import { useTranslation } from '../hooks/useTranslation';
 import { siteConfig } from '../site.config';
 import { getAllContent, ContentMeta } from '../lib/content';
@@ -94,6 +95,17 @@ export default function Home({
               <Route className="w-5 h-5" />
               {t('hero.secondaryCta')}
             </Link>
+          </div>
+
+          {/* Email capture — hero variant */}
+          <div className="max-w-lg mx-auto mt-10 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+            <EmailCapture
+              variant="hero"
+              heading="Plan Your Perfect Mexico Trip"
+              subtext="Get insider tips, budget hacks, and hidden gems delivered weekly. Free forever."
+              buttonText="Get Free Tips"
+              className="[&_h3]:text-white [&_p]:text-white/70 [&_.text-gray-400]:text-white/50"
+            />
           </div>
 
           {/* Trust indicators */}

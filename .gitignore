@@ -6,3 +6,9 @@ out/
 .env.*.local
 *.tsbuildinfo
 .vercel
+.claude/
+.playwright-mcp/
+e2e-screenshots/
+screenshots/
+hero-check.png
+logs/
