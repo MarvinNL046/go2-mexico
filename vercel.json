@@ -2,19 +2,19 @@
   "crons": [
     {
       "path": "/api/cron/generate-blog",
-      "schedule": "0 9 * * 1"
+      "schedule": "0 10 * * 2"
     },
     {
       "path": "/api/cron/generate-blog",
-      "schedule": "0 9 * * 4"
+      "schedule": "0 10 * * 5"
     },
     {
       "path": "/api/cron/translate-blog",
-      "schedule": "0 10 * * 1"
+      "schedule": "30 10 * * 2"
     },
     {
       "path": "/api/cron/translate-blog",
-      "schedule": "0 10 * * 4"
+      "schedule": "30 10 * * 5"
     }
   ]
 }
