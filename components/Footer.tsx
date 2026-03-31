@@ -175,7 +175,7 @@ const Footer = () => {
             Explore our destination guides across Asia, Europe, Africa, and the Americas
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            <a href="https://go2thailand.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Thailand</a>
+            <a href="https://go2-thailand.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Thailand</a>
             <a href="https://go2-bali.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Bali</a>
             <a href="https://go2-vietnam.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Vietnam</a>
             <a href="https://go2-japan.com" target="_blank" rel="noopener" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Go2Japan</a>
