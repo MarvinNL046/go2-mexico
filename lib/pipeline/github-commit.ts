@@ -244,5 +244,16 @@ export async function commitFiles(
 
   console.log(`[github-commit] Successfully pushed commit: ${newCommit.sha}`);
 
+  // Trigger Vercel redeploy (GitHub API commits don't fire webhooks)
+  const deployHook = process.env.VERCEL_DEPLOY_HOOK;
+  if (deployHook) {
+    try {
+      const hookRes = await fetch(deployHook, { method: "POST" });
+      console.log(`[github-commit] Vercel deploy hook: ${hookRes.status}`);
+    } catch (err) {
+      console.warn("[github-commit] Deploy hook failed (non-fatal):", err);
+    }
+  }
+
   return { sha: newCommit.sha, url: newCommit.html_url };
 }
