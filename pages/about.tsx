@@ -124,6 +124,37 @@ export default function About() {
           </div>
         </section>
 
+        {/* Meet the Founder */}
+        <section className="mb-12">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+            <h2 className="text-2xl font-bold text-brand-secondary mb-6">Meet the Founder</h2>
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="flex-shrink-0">
+                <Image
+                  src="/images/team/marvin.webp"
+                  alt="Marvin — Founder of Go2Mexico"
+                  width={180}
+                  height={180}
+                  className="rounded-2xl object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-brand-secondary mb-2">Marvin</h3>
+                <p className="text-sm text-brand-primary font-medium mb-3">Founder &amp; Developer</p>
+                <p className="text-gray-700 mb-3">
+                  Marvin is a Dutch travel technology specialist and the creator of the Go2 Travel Network — a growing
+                  family of independent destination guides. With a passion for exploring Mexico and a background in
+                  web development, he builds data-driven, practical travel guides that help travelers plan better trips.
+                </p>
+                <p className="text-gray-700">
+                  The Go2 network now spans multiple destinations across Asia, Europe, and the Americas, with each site
+                  offering in-depth city guides, local food recommendations, transport routes, and honest travel advice.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Transparency */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold text-brand-secondary mb-4">Transparency</h2>
