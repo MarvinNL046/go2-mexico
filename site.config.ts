@@ -215,7 +215,7 @@ export const siteConfig: SiteConfig = {
     'go2mexico-team': {
       name: 'Go2Mexico Team',
       bio: 'Our team of travel writers and Mexico enthusiasts brings years of firsthand experience exploring every corner of Mexico. From bustling Mexico City markets to serene Oaxacan villages, we share authentic insights to help you plan your perfect Mexican adventure.',
-      avatar: '/images/authors/team.webp',
+      avatar: '/images/team/marvin.webp',
       credentials: 'Travel writers with 10+ years of Mexico travel experience',
     },
     'carlos-mendoza': {
