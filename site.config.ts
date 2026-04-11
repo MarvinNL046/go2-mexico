@@ -157,7 +157,7 @@ export const siteConfig: SiteConfig = {
     siteUrl: 'https://go2-mexico.com',
     ogImage: '/images/og-default.jpg',
     twitterHandle: 'go2mexico',
-    googleAnalyticsId: '',
+    googleAnalyticsId: 'G-1CEBKML4WX',
     indexNowKey: '',
   },
 
