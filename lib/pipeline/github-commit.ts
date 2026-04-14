@@ -1,259 +1,139 @@
-const GITHUB_API_BASE = 'https://api.github.com';
-const REPO_OWNER = 'MarvinNL046';
-const REPO_NAME = 'go2-mexico';
-const BRANCH = 'main';
+// Commit one or more files to the GitHub repo via the Contents API
+// Then triggers a Vercel redeploy via deploy hook (GitHub API commits don't trigger webhooks)
 
-export interface CommitFile {
-  path: string;
-  content: string | Buffer;
-  encoding: 'utf-8' | 'base64';
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const VERCEL_DEPLOY_HOOK = process.env.VERCEL_DEPLOY_HOOK;
+const REPO_OWNER = "MarvinNL046";
+const REPO_NAME = "go2thailand.com";
+const BRANCH = "main";
+
+export interface FileToCommit {
+  path: string;       // e.g. "content/blog/en/thai-food-guide.md"
+  content: string;    // File content (utf-8 string or base64 string)
+  encoding?: "utf-8" | "base64"; // default: "utf-8"
 }
 
-interface GitHubBlob {
-  sha: string;
-  url: string;
-}
-
-interface GitHubRef {
-  object: {
-    sha: string;
-  };
-}
-
-interface GitHubCommit {
-  sha: string;
-  tree: {
-    sha: string;
-  };
-}
-
-interface GitHubTree {
-  sha: string;
-  url: string;
-}
-
-interface GitHubNewCommit {
-  sha: string;
-  html_url: string;
-}
-
-function getToken(): string {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) throw new Error('GITHUB_TOKEN environment variable is not set');
-  return token;
-}
-
-function githubHeaders(token: string): Record<string, string> {
-  return {
-    Authorization: `token ${token}`,
-    Accept: 'application/vnd.github.v3+json',
-    'Content-Type': 'application/json',
-  };
-}
-
-async function githubFetch<T>(
-  token: string,
-  path: string,
-  options: RequestInit = {}
-): Promise<T> {
-  const url = `${GITHUB_API_BASE}${path}`;
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      ...githubHeaders(token),
-      ...(options.headers as Record<string, string> | undefined),
-    },
-  });
-
-  if (!response.ok) {
-    const body = await response.text().catch(() => '(unreadable body)');
-    throw new Error(
-      `GitHub API error ${response.status} at ${path}: ${body}`
-    );
-  }
-
-  return response.json() as Promise<T>;
-}
-
-async function getLatestCommitSha(token: string): Promise<string> {
-  const ref = await githubFetch<GitHubRef>(
-    token,
-    `/repos/${REPO_OWNER}/${REPO_NAME}/git/ref/heads/${BRANCH}`
-  );
-  return ref.object.sha;
-}
-
-async function getTreeSha(token: string, commitSha: string): Promise<string> {
-  const commit = await githubFetch<GitHubCommit>(
-    token,
-    `/repos/${REPO_OWNER}/${REPO_NAME}/git/commits/${commitSha}`
-  );
-  return commit.tree.sha;
-}
-
-async function createBlob(
-  token: string,
-  file: CommitFile
-): Promise<{ path: string; sha: string }> {
-  let blobContent: string;
-  let blobEncoding: string;
-
-  if (Buffer.isBuffer(file.content)) {
-    blobContent = file.content.toString('base64');
-    blobEncoding = 'base64';
-  } else if (file.encoding === 'base64') {
-    blobContent = file.content;
-    blobEncoding = 'base64';
-  } else {
-    blobContent = file.content;
-    blobEncoding = 'utf-8';
-  }
-
-  const blob = await githubFetch<GitHubBlob>(
-    token,
-    `/repos/${REPO_OWNER}/${REPO_NAME}/git/blobs`,
-    {
-      method: 'POST',
-      body: JSON.stringify({ content: blobContent, encoding: blobEncoding }),
-    }
-  );
-
-  return { path: file.path, sha: blob.sha };
-}
-
-async function createTree(
-  token: string,
-  baseTreeSha: string,
-  blobs: Array<{ path: string; sha: string }>
-): Promise<string> {
-  const tree = blobs.map(({ path, sha }) => ({
-    path,
-    mode: '100644',
-    type: 'blob',
-    sha,
-  }));
-
-  const newTree = await githubFetch<GitHubTree>(
-    token,
-    `/repos/${REPO_OWNER}/${REPO_NAME}/git/trees`,
-    {
-      method: 'POST',
-      body: JSON.stringify({ base_tree: baseTreeSha, tree }),
-    }
-  );
-
-  return newTree.sha;
-}
-
-async function createCommit(
-  token: string,
-  message: string,
-  treeSha: string,
-  parentSha: string
-): Promise<GitHubNewCommit> {
-  return githubFetch<GitHubNewCommit>(
-    token,
-    `/repos/${REPO_OWNER}/${REPO_NAME}/git/commits`,
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        message,
-        tree: treeSha,
-        parents: [parentSha],
-      }),
-    }
-  );
-}
-
-async function updateRef(token: string, commitSha: string): Promise<void> {
-  await githubFetch(
-    token,
-    `/repos/${REPO_OWNER}/${REPO_NAME}/git/refs/heads/${BRANCH}`,
-    {
-      method: 'PATCH',
-      body: JSON.stringify({ sha: commitSha, force: false }),
-    }
-  );
-}
-
-export async function commitFiles(
-  files: CommitFile[],
-  message: string
+// Commit multiple files in a single commit using the Git Trees API
+// Retries up to 3 times on ref update conflicts (e.g. concurrent pushes)
+export async function commitFilesToGitHub(
+  files: FileToCommit[],
+  commitMessage: string
 ): Promise<{ sha: string; url: string }> {
-  if (files.length === 0) {
-    throw new Error('commitFiles: no files provided');
+  if (!GITHUB_TOKEN) {
+    throw new Error("GITHUB_TOKEN is not configured");
   }
 
-  const token = getToken();
+  const headers = {
+    Authorization: `token ${GITHUB_TOKEN}`,
+    Accept: "application/vnd.github.v3+json",
+    "Content-Type": "application/json",
+  };
 
-  console.log(
-    `[github-commit] Committing ${files.length} file(s) to ${REPO_OWNER}/${REPO_NAME}@${BRANCH}`
-  );
+  const apiBase = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
 
-  let latestCommitSha: string;
-  try {
-    latestCommitSha = await getLatestCommitSha(token);
-  } catch (err) {
-    const message_ctx = err instanceof Error ? err.message : String(err);
-    throw new Error(`[github-commit] Failed to get latest commit SHA: ${message_ctx}`);
-  }
-  console.log(`[github-commit] Latest commit SHA: ${latestCommitSha}`);
-
-  let baseTreeSha: string;
-  try {
-    baseTreeSha = await getTreeSha(token, latestCommitSha);
-  } catch (err) {
-    const message_ctx = err instanceof Error ? err.message : String(err);
-    throw new Error(`[github-commit] Failed to get base tree SHA: ${message_ctx}`);
-  }
-  console.log(`[github-commit] Base tree SHA: ${baseTreeSha}`);
-
-  let blobs: Array<{ path: string; sha: string }>;
-  try {
-    blobs = await Promise.all(files.map((file) => createBlob(token, file)));
-  } catch (err) {
-    const message_ctx = err instanceof Error ? err.message : String(err);
-    throw new Error(`[github-commit] Failed to create blob(s): ${message_ctx}`);
-  }
-  console.log(`[github-commit] Created ${blobs.length} blob(s)`);
-
-  let newTreeSha: string;
-  try {
-    newTreeSha = await createTree(token, baseTreeSha, blobs);
-  } catch (err) {
-    const message_ctx = err instanceof Error ? err.message : String(err);
-    throw new Error(`[github-commit] Failed to create tree: ${message_ctx}`);
-  }
-  console.log(`[github-commit] New tree SHA: ${newTreeSha}`);
-
-  let newCommit: GitHubNewCommit;
-  try {
-    newCommit = await createCommit(token, message, newTreeSha, latestCommitSha);
-  } catch (err) {
-    const message_ctx = err instanceof Error ? err.message : String(err);
-    throw new Error(`[github-commit] Failed to create commit: ${message_ctx}`);
-  }
-  console.log(`[github-commit] New commit SHA: ${newCommit.sha}`);
-
-  try {
-    await updateRef(token, newCommit.sha);
-  } catch (err) {
-    const message_ctx = err instanceof Error ? err.message : String(err);
-    throw new Error(`[github-commit] Failed to update ref: ${message_ctx}`);
+  // Create blobs once (they're content-addressed, reusable across retries)
+  const blobShas: { path: string; sha: string }[] = [];
+  for (const file of files) {
+    const blobRes = await fetch(`${apiBase}/git/blobs`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        content: file.encoding === "base64"
+          ? file.content
+          : Buffer.from(file.content, "utf-8").toString("base64"),
+        encoding: "base64",
+      }),
+    });
+    if (!blobRes.ok) {
+      throw new Error(`Failed to create blob for ${file.path}: ${await blobRes.text()}`);
+    }
+    const blobData = await blobRes.json();
+    blobShas.push({ path: file.path, sha: blobData.sha });
   }
 
-  console.log(`[github-commit] Successfully pushed commit: ${newCommit.sha}`);
+  // Retry loop: re-read HEAD, create tree+commit, update ref
+  const MAX_RETRIES = 3;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    // 1. Get the latest commit SHA on main
+    const refRes = await fetch(`${apiBase}/git/ref/heads/${BRANCH}`, { headers });
+    if (!refRes.ok) throw new Error(`Failed to get ref: ${await refRes.text()}`);
+    const refData = await refRes.json();
+    const latestCommitSha = refData.object.sha;
 
-  // Trigger Vercel redeploy (GitHub API commits don't fire webhooks)
-  const deployHook = process.env.VERCEL_DEPLOY_HOOK;
-  if (deployHook) {
-    try {
-      const hookRes = await fetch(deployHook, { method: "POST" });
-      console.log(`[github-commit] Vercel deploy hook: ${hookRes.status}`);
-    } catch (err) {
-      console.warn("[github-commit] Deploy hook failed (non-fatal):", err);
+    // 2. Get the tree SHA of the latest commit
+    const commitRes = await fetch(`${apiBase}/git/commits/${latestCommitSha}`, { headers });
+    if (!commitRes.ok) throw new Error(`Failed to get commit: ${await commitRes.text()}`);
+    const commitData = await commitRes.json();
+    const baseTreeSha = commitData.tree.sha;
+
+    // 3. Create a new tree
+    const treeRes = await fetch(`${apiBase}/git/trees`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        base_tree: baseTreeSha,
+        tree: blobShas.map(b => ({
+          path: b.path,
+          mode: "100644",
+          type: "blob",
+          sha: b.sha,
+        })),
+      }),
+    });
+    if (!treeRes.ok) throw new Error(`Failed to create tree: ${await treeRes.text()}`);
+    const treeData = await treeRes.json();
+
+    // 4. Create the commit
+    const newCommitRes = await fetch(`${apiBase}/git/commits`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        message: commitMessage,
+        tree: treeData.sha,
+        parents: [latestCommitSha],
+      }),
+    });
+    if (!newCommitRes.ok) {
+      throw new Error(`Failed to create commit: ${await newCommitRes.text()}`);
+    }
+    const newCommitData = await newCommitRes.json();
+
+    // 5. Update the branch reference (non-force — fails if HEAD moved)
+    const updateRefRes = await fetch(`${apiBase}/git/refs/heads/${BRANCH}`, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify({
+        sha: newCommitData.sha,
+      }),
+    });
+
+    if (updateRefRes.ok) {
+      console.log(`[github-commit] Committed ${files.length} files: ${newCommitData.sha}`);
+
+      // Trigger Vercel redeploy (GitHub API commits don't fire webhooks)
+      if (VERCEL_DEPLOY_HOOK) {
+        try {
+          const hookRes = await fetch(VERCEL_DEPLOY_HOOK, { method: "POST" });
+          console.log(`[github-commit] Vercel deploy hook: ${hookRes.status}`);
+        } catch (err) {
+          console.warn("[github-commit] Deploy hook failed (non-fatal):", err);
+        }
+      }
+
+      return {
+        sha: newCommitData.sha,
+        url: newCommitData.html_url,
+      };
+    }
+
+    // Ref update failed — HEAD moved between step 1 and 5 (concurrent push)
+    if (attempt < MAX_RETRIES) {
+      console.warn(`[github-commit] Ref update conflict (attempt ${attempt}/${MAX_RETRIES}), retrying...`);
+      await new Promise(r => setTimeout(r, 1000 * attempt)); // backoff
+    } else {
+      throw new Error(`Failed to update ref after ${MAX_RETRIES} attempts: ${await updateRefRes.text()}`);
     }
   }
 
-  return { sha: newCommit.sha, url: newCommit.html_url };
+  throw new Error("Unreachable");
 }

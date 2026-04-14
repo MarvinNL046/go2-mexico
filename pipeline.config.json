@@ -1,0 +1,11 @@
+{
+  "country": "Mexico",
+  "siteName": "Go2Mexico",
+  "hostname": "go2-mexico.com",
+  "locales": ["en"],
+  "autocompleteSeeds": {
+    "en": ["Mexico travel", "Mexico backpacker", "Mexico digital nomad", "Mexico visa"]
+  },
+  "newsQuery": "Mexico",
+  "scrapeNewsSources": []
+}

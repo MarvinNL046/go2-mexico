@@ -1,307 +1,313 @@
-/**
- * Web scraper for the Mexico travel blog content pipeline.
- *
- * Scraping strategy (in order of preference):
- *   1. Jina Reader  – converts any URL to clean markdown
- *   2. BrightData   – unlocker proxy for sites that block Jina
- *   3. Direct fetch – plain HTTP request as last resort
- *
- * Search is handled exclusively by Jina Search.
- */
+const JINA_API_KEY = process.env.JINA_API_KEY;
+const JINA_READER_URL = "https://r.jina.ai";
+const JINA_SEARCH_URL = "https://s.jina.ai";
 
-const TIMEOUT_MS = 30_000;
+const BRIGHT_DATA_API_KEY = process.env.BRIGHT_DATA_API_KEY;
+const BRIGHT_DATA_ZONE = process.env.BRIGHT_DATA_ZONE || "web_unlocker1";
 
-// ---------------------------------------------------------------------------
-// Preferred Mexico travel sources (used when building research queries)
-// ---------------------------------------------------------------------------
-export const MEXICO_SOURCES = [
-  "visitmexico.com",
-  "lonelyplanet.com/mexico",
-  "mexiconewsdaily.com",
-  "timeout.com/mexico-city",
-  "travelandleisure.com",
+const FETCH_TIMEOUT_MS = 15_000; // 15 seconds per fetch call
+
+function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = FETCH_TIMEOUT_MS): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer));
+}
+
+export interface ScrapedContent {
+  url: string;
+  content: string;
+  title?: string;
+}
+
+export interface ScrapedArticle {
+  title: string;
+  summary: string;
+  source: string;
+  url: string;
+  date?: string;
+}
+
+// Thailand travel news sources
+const TRAVEL_NEWS_SOURCES = [
+  "https://thethaiger.com/news/thailand",
+  "https://www.bangkokpost.com/travel",
+  "https://www.tourismthailand.org/Articles",
+  "https://www.lonelyplanet.com/thailand",
+  "https://www.nomadicmatt.com/travel-guides/thailand-travel-tips/",
 ];
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
+// Primary info source — scraped for latest Thailand news
+const THAILAND_BLOG_URL = "https://thailandblog.nl/en/";
 
-function getEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-  return value;
-}
-
-/** Strips HTML tags and collapses whitespace to produce plain text. */
-function htmlToText(html: string): string {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/&lt;/gi, "<")
-    .replace(/&gt;/gi, ">")
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-}
-
-/** Wraps a fetch call with an AbortController timeout. */
-async function fetchWithTimeout(
-  url: string,
-  init: RequestInit = {}
-): Promise<Response> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-  try {
-    const response = await fetch(url, { ...init, signal: controller.signal });
-    return response;
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Jina Reader
-// ---------------------------------------------------------------------------
-
-async function scrapeWithJina(url: string): Promise<string> {
-  const apiKey = getEnv("JINA_API_KEY");
-  const jinaUrl = `https://r.jina.ai/${url}`;
-
-  const response = await fetchWithTimeout(jinaUrl, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      Accept: "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Jina Reader returned ${response.status} for ${url}`);
-  }
-
-  const data = (await response.json()) as {
-    data?: { content?: string; text?: string };
-    content?: string;
-    text?: string;
-  };
-
-  // Jina wraps the content in data.content or data.text
-  const content =
-    data?.data?.content ??
-    data?.data?.text ??
-    data?.content ??
-    data?.text ??
-    "";
-
-  if (!content) {
-    throw new Error(`Jina Reader returned empty content for ${url}`);
-  }
-
-  return content;
-}
-
-// ---------------------------------------------------------------------------
-// BrightData Web Unlocker
-// ---------------------------------------------------------------------------
-
+// Bright Data fallback — uses Web Unlocker to bypass blocks
 async function scrapeWithBrightData(url: string): Promise<string> {
-  const apiKey = getEnv("BRIGHT_DATA_API_KEY");
+  if (!BRIGHT_DATA_API_KEY) {
+    throw new Error("BRIGHT_DATA_API_KEY is not configured");
+  }
 
   const response = await fetchWithTimeout("https://api.brightdata.com/request", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${BRIGHT_DATA_API_KEY}`,
     },
-    body: JSON.stringify({ zone: "unlocker", url, format: "raw" }),
+    body: JSON.stringify({
+      zone: BRIGHT_DATA_ZONE,
+      url,
+      format: "raw",
+    }),
   });
 
   if (!response.ok) {
-    throw new Error(`BrightData returned ${response.status} for ${url}`);
+    throw new Error(`Bright Data scrape failed for ${url}: ${response.status} ${response.statusText}`);
   }
 
-  const raw = await response.text();
-  return htmlToText(raw);
+  return response.text();
 }
 
-// ---------------------------------------------------------------------------
-// Direct fetch (last resort)
-// ---------------------------------------------------------------------------
-
-async function scrapeDirectly(url: string): Promise<string> {
+// Direct fetch fallback — strips HTML tags for plain text extraction
+async function directFetch(url: string): Promise<string> {
   const response = await fetchWithTimeout(url, {
     headers: {
       "User-Agent":
-        "Mozilla/5.0 (compatible; Go2MexicoBot/1.0; +https://go2-mexico.com)",
+        "Mozilla/5.0 (compatible; Go2ThailandBot/1.0; +https://go2-thailand.com)",
     },
   });
-
   if (!response.ok) {
-    throw new Error(`Direct fetch returned ${response.status} for ${url}`);
+    throw new Error(`Direct fetch failed for ${url}: ${response.status}`);
   }
-
-  const raw = await response.text();
-  return htmlToText(raw);
+  const html = await response.text();
+  // Basic HTML to text: strip tags, decode entities, collapse whitespace
+  const text = html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, "\n")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+  return text.slice(0, 8000);
 }
 
-// ---------------------------------------------------------------------------
-// Public API
-// ---------------------------------------------------------------------------
-
-/**
- * Scrape a single URL and return its content as plain text / markdown.
- *
- * Strategy: Jina Reader → BrightData → direct fetch
- */
+// Fetch a URL via Jina.ai Reader API (returns clean Markdown)
+// Falls back to direct fetch if Jina fails
 export async function scrapeUrl(url: string): Promise<string> {
-  // 1. Jina Reader
+  // Try Jina first
   try {
-    const content = await scrapeWithJina(url);
-    return content;
-  } catch (jinaError) {
-    console.warn(`[scraper] Jina Reader failed for ${url}:`, jinaError);
+    const headers: Record<string, string> = {
+      Accept: "text/markdown",
+      "X-Return-Format": "markdown",
+    };
+
+    if (JINA_API_KEY && JINA_API_KEY !== "your_jina_api_key_here") {
+      headers["Authorization"] = `Bearer ${JINA_API_KEY}`;
+    }
+
+    const response = await fetchWithTimeout(`${JINA_READER_URL}/${url}`, {
+      method: "GET",
+      headers,
+    });
+
+    if (response.ok) {
+      const content = await response.text();
+      if (content && content.length >= 100) {
+        return content;
+      }
+    }
+    console.warn(`[scraper] Jina failed for ${url}, trying Bright Data...`);
+  } catch (e) {
+    console.warn(`[scraper] Jina error for ${url}:`, e);
   }
 
-  // 2. BrightData
+  // Fallback: Bright Data
   try {
     const content = await scrapeWithBrightData(url);
-    return content;
-  } catch (bdError) {
-    console.warn(`[scraper] BrightData failed for ${url}:`, bdError);
+    if (content && content.length >= 100) {
+      return content;
+    }
+    console.warn(`[scraper] Bright Data returned insufficient content for ${url}, trying direct fetch...`);
+  } catch (e) {
+    console.warn(`[scraper] Bright Data error for ${url}:`, e);
   }
 
-  // 3. Direct fetch
-  const content = await scrapeDirectly(url);
-  return content;
+  // Last resort: direct fetch
+  return directFetch(url);
 }
 
-// ---------------------------------------------------------------------------
-// Jina Search
-// ---------------------------------------------------------------------------
+// Scrape thailand-related travel news from multiple sources in parallel
+export async function scrapeTravelNews(): Promise<ScrapedArticle[]> {
+  const settled = await Promise.allSettled(
+    TRAVEL_NEWS_SOURCES.map(async (sourceUrl) => {
+      const content = await scrapeUrl(sourceUrl);
+      const hostname = new URL(sourceUrl).hostname;
+      return {
+        title: `Thailand Travel News from ${hostname}`,
+        summary: content.slice(0, 2000),
+        source: hostname,
+        url: sourceUrl,
+        date: new Date().toISOString(),
+      };
+    })
+  );
 
-interface JinaSearchResult {
-  title: string;
-  url: string;
-  snippet: string;
+  const results: ScrapedArticle[] = [];
+  for (const r of settled) {
+    if (r.status === "fulfilled") {
+      results.push(r.value);
+    } else {
+      console.warn("Travel news scrape failed:", r.reason);
+    }
+  }
+
+  return results;
 }
 
-interface JinaSearchResponse {
-  data?: Array<{
-    title?: string;
-    url?: string;
-    description?: string;
-    content?: string;
-  }>;
-  results?: Array<{
-    title?: string;
-    url?: string;
-    description?: string;
-    content?: string;
-  }>;
+// Scrape thailandblog.nl/en for latest Thailand news and info
+// This is the primary info source for the content pipeline
+export async function scrapeThailandBlog(): Promise<ScrapedContent> {
+  const content = await scrapeUrl(THAILAND_BLOG_URL);
+
+  // Extract title if present
+  const titleMatch = content.match(/^#\s+(.+)/m);
+  const title = titleMatch?.[1] || "Thailand Blog — Latest News";
+
+  return {
+    url: THAILAND_BLOG_URL,
+    content: content.slice(0, 6000), // Limit to first 6000 chars for prompt context
+    title,
+  };
 }
 
-/**
- * Search for a query via Jina Search and return structured results.
- */
+// Search for a specific topic using Jina Search API (s.jina.ai)
 export async function searchTopic(
   query: string
-): Promise<JinaSearchResult[]> {
-  const apiKey = getEnv("JINA_SEARCH_API_KEY");
-  const searchUrl = `https://s.jina.ai/?q=${encodeURIComponent(query)}`;
+): Promise<Array<{ title: string; summary: string; url: string }>> {
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+  };
 
-  const response = await fetchWithTimeout(searchUrl, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      Accept: "application/json",
-    },
+  if (JINA_API_KEY) {
+    headers["Authorization"] = `Bearer ${JINA_API_KEY}`;
+  }
+
+  const encodedQuery = encodeURIComponent(query);
+  const response = await fetchWithTimeout(`${JINA_SEARCH_URL}/${encodedQuery}`, {
+    method: "GET",
+    headers,
   });
 
   if (!response.ok) {
-    throw new Error(`Jina Search returned ${response.status} for "${query}"`);
+    console.warn(`[scraper] Jina search failed for "${query}": ${response.status}`);
+    return []; // Return empty results instead of throwing
   }
 
-  const data = (await response.json()) as JinaSearchResponse;
+  const data = await response.json();
+  const items: Array<{ title: string; summary: string; url: string }> = [];
 
-  const raw = data?.data ?? data?.results ?? [];
+  // Jina search returns { data: [{ title, description, url, content }] }
+  const results = data.data || data.results || [];
+  for (const item of results.slice(0, 6)) {
+    items.push({
+      title: item.title || "Untitled",
+      summary: (item.description || item.content || "").slice(0, 400),
+      url: item.url || "",
+    });
+  }
 
-  return raw.map((item) => ({
-    title: item.title ?? "",
-    url: item.url ?? "",
-    snippet: item.description ?? item.content ?? "",
-  }));
+  return items;
 }
 
-// ---------------------------------------------------------------------------
-// Research topic (search + scrape combined)
-// ---------------------------------------------------------------------------
+// Scrape specific priority URLs (e.g. from topic queue)
+export async function scrapeSpecificUrls(urls: string[]): Promise<string> {
+  const settled = await Promise.allSettled(
+    urls.map(async (url) => {
+      const content = await scrapeUrl(url);
+      const hostname = new URL(url).hostname;
+      return `## Source: ${hostname}\nURL: ${url}\n\n${content.slice(0, 3000)}`;
+    })
+  );
 
-/**
- * Research a Mexico travel topic by:
- *   1. Optionally scraping any provided seed URLs.
- *   2. Searching Jina for the topic (preferring known Mexico sources).
- *   3. Scraping the top search results.
- *
- * Returns all collected text merged into a single string.
- */
-export async function researchTopic(
-  topic: string,
-  urls: string[] = []
-): Promise<string> {
-  const sections: string[] = [];
-
-  // Scrape any caller-provided seed URLs first
-  for (const url of urls) {
-    try {
-      const text = await scrapeUrl(url);
-      sections.push(`--- Source: ${url} ---\n${text}`);
-    } catch (err) {
-      console.warn(`[scraper] Failed to scrape seed URL ${url}:`, err);
+  const parts: string[] = [];
+  for (const r of settled) {
+    if (r.status === "fulfilled") {
+      parts.push(r.value);
     }
   }
+  return parts.join("\n\n---\n\n");
+}
 
-  // Search for the topic, biased toward preferred Mexico sources
-  const query = `${topic} Mexico travel`;
-  let searchResults: JinaSearchResult[] = [];
-  try {
-    searchResults = await searchTopic(query);
-  } catch (err) {
-    console.warn(`[scraper] Jina Search failed for "${query}":`, err);
+// Scrape a batch of Thailand travel sources for a specific topic
+// Returns combined content for use as AI context — the more high-quality data, the better
+export async function scrapeTopicContext(topic: string, priorityUrls?: string[]): Promise<string> {
+  const year = new Date().getFullYear();
+  const parts: string[] = [];
+
+  // Scrape priority URLs in parallel with the standard searches (if provided)
+  const priorityUrlsPromise = priorityUrls && priorityUrls.length > 0
+    ? scrapeSpecificUrls(priorityUrls)
+    : Promise.resolve(null);
+
+  // Run multiple scrape strategies in parallel for maximum data
+  const [searchResults, detailedSearch, blogContent, newsContent, priorityData] = await Promise.allSettled([
+    // 1. Primary topic search
+    searchTopic(`${topic} Thailand ${year} travel guide`),
+    // 2. More specific search for prices, tips, and practical info
+    searchTopic(`${topic} Thailand prices tips ${year}`),
+    // 3. Thailand Blog as primary editorial source
+    scrapeThailandBlog(),
+    // 4. Scrape one relevant travel news source for freshness
+    scrapeTravelNews().then((articles) => articles.slice(0, 3)),
+    // 5. Priority URLs (from topic queue) — scraped in parallel
+    priorityUrlsPromise,
+  ]);
+
+  // Priority reference data prepended first (authoritative sources from topic queue)
+  if (priorityData.status === "fulfilled" && priorityData.value) {
+    parts.unshift(`PRIORITY REFERENCE DATA (from authoritative sources):\n${priorityData.value}`);
+  } else if (priorityData.status === "rejected") {
+    console.warn("[scraper] Priority URL scrape failed:", priorityData.reason);
   }
 
-  // Prefer results from known Mexico travel sources
-  const preferred = searchResults.filter((r) =>
-    MEXICO_SOURCES.some((source) => r.url.includes(source))
-  );
-  const others = searchResults.filter(
-    (r) => !MEXICO_SOURCES.some((source) => r.url.includes(source))
-  );
+  // Primary search results
+  if (searchResults.status === "fulfilled" && searchResults.value.length > 0) {
+    const searchText = searchResults.value
+      .map((r) => `## ${r.title}\n${r.summary}\nSource: ${r.url}`)
+      .join("\n\n");
+    parts.push(`SEARCH RESULTS (primary):\n${searchText}`);
+  } else if (searchResults.status === "rejected") {
+    console.warn("[scraper] Primary topic search failed:", searchResults.reason);
+  }
 
-  // Take up to 5 results total (preferred first)
-  const toScrape = [...preferred, ...others].slice(0, 5);
+  // Detailed/prices search results
+  if (detailedSearch.status === "fulfilled" && detailedSearch.value.length > 0) {
+    const detailedText = detailedSearch.value
+      .map((r) => `## ${r.title}\n${r.summary}\nSource: ${r.url}`)
+      .join("\n\n");
+    parts.push(`SEARCH RESULTS (prices & details):\n${detailedText}`);
+  }
 
-  // Add search snippets section
-  if (toScrape.length > 0) {
-    const snippetLines = toScrape
-      .map((r) => `- [${r.title}](${r.url}): ${r.snippet}`)
+  // Thailand Blog
+  if (blogContent.status === "fulfilled") {
+    parts.push(
+      `THAILAND BLOG (thailandblog.nl) — Editorial source:\n${blogContent.value.content}`
+    );
+  } else {
+    console.warn("[scraper] Thailand blog scrape failed:", blogContent.reason);
+  }
+
+  // Recent news for freshness
+  if (newsContent.status === "fulfilled" && newsContent.value.length > 0) {
+    const newsText = newsContent.value
+      .map((a) => `- ${a.title} (${a.source}): ${a.summary.slice(0, 300)}`)
       .join("\n");
-    sections.push(`--- Search results for: ${query} ---\n${snippetLines}`);
+    parts.push(`RECENT THAILAND NEWS:\n${newsText}`);
   }
 
-  // Scrape each result URL
-  for (const result of toScrape) {
-    if (!result.url) continue;
-    try {
-      const text = await scrapeUrl(result.url);
-      sections.push(`--- Source: ${result.url} ---\n${text}`);
-    } catch (err) {
-      console.warn(`[scraper] Failed to scrape ${result.url}:`, err);
-    }
-  }
-
-  return sections.join("\n\n");
+  const combined = parts.join("\n\n---\n\n");
+  console.log(`[scraper] Total context gathered: ${combined.length} chars from ${parts.length} sources`);
+  return combined;
 }

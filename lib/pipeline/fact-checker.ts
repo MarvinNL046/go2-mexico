@@ -1,253 +1,177 @@
-import { generateContent } from './ai-provider';
+// -------------------------------------------------------------------
+// Fact-checker — regex-based claim extraction + cross-reference
+// against scraped source data. No AI calls, pure string matching.
+// -------------------------------------------------------------------
 
-export interface Claim {
-  text: string;
-  type: string;
-  flagged: boolean;
-  suggestion?: string;
+export interface FactClaim {
+  type: "date" | "price" | "statistic" | "time";
+  value: string;
+  context: string; // surrounding ~60 chars
 }
 
 export interface FactCheckResult {
-  claims: Array<Claim>;
-  cleanedContent: string;
-  score: number;
+  totalClaims: number;
+  verifiedClaims: number;
+  unverifiedClaims: FactClaim[];
+  riskLevel: "low" | "medium" | "high";
 }
 
-// ─── Claim extraction ────────────────────────────────────────────────────────
+// -------------------------------------------------------------------
+// Claim extraction patterns
+// -------------------------------------------------------------------
 
-const PATTERNS: Record<string, RegExp> = {
-  price:      /\$[\d,.]+|\b[\d,.]+\s*(MXN|pesos|USD|dollars)\b/gi,
-  year:       /\b(1[0-9]{3}|20[0-9]{2})\b/g,
-  statistic:  /\b\d+(\.\d+)?%|\b\d{1,3}(,\d{3})+\b/g,
-  distance:   /\b\d+\s*(km|miles|hours?|minutes?)\b/gi,
-};
+const DATE_PATTERNS = [
+  // "January 3", "March 5 (Thursday)", "December 25, 2026"
+  /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:\s*\((?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\))?(?:,?\s*\d{4})?\b/gi,
+  // "2026-03-05", "2026-12-25"
+  /\b20\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])\b/g,
+  // "5 January 2026"
+  /\b\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+20\d{2}\b/gi,
+];
 
-interface RawClaim {
-  text: string;
-  type: string;
+const PRICE_PATTERNS = [
+  // "10,000 THB", "500 THB", "1,500 baht"
+  /\b[\d,]+\s*(?:THB|baht)\b/gi,
+  // "$85 USD", "$50", "$30"
+  /\$[\d,]+(?:\s*USD)?\b/g,
+  // "฿1,500", "฿300"
+  /฿[\d,]+/g,
+  // "300–500 THB", "100-200 baht" (ranges)
+  /\b[\d,]+\s*[–\-]\s*[\d,]+\s*(?:THB|baht)\b/gi,
+  // "$30–$50" (USD ranges)
+  /\$[\d,]+\s*[–\-]\s*\$[\d,]+/g,
+];
+
+const STATISTIC_PATTERNS = [
+  // "200+ Mbps", "30,000 visitors", "5 million"
+  /\b[\d,]+\+?\s*(?:Mbps|visitors|people|tourists|travelers|km|kilometers|metres|meters|hectares|temples|islands|species|rooms|beds|seats|stalls|vendors|shops|restaurants|bars|clubs)\b/gi,
+  // "10%", "25 percent"
+  /\b\d+(?:\.\d+)?%/g,
+  /\b\d+(?:\.\d+)?\s*percent\b/gi,
+  // Large round numbers: "30,000", "1 million", "2.5 million"
+  /\b\d+(?:\.\d+)?\s*(?:million|billion)\b/gi,
+];
+
+const TIME_PATTERNS = [
+  // "10 PM", "8 AM", "10:30 PM"
+  /\b\d{1,2}(?::\d{2})?\s*(?:AM|PM|am|pm|a\.m\.|p\.m\.)\b/g,
+  // "open 8 AM–5 PM", "opens at 9 AM"
+  /\b(?:open|opens|closes|closing)\s+(?:at\s+)?\d{1,2}(?::\d{2})?\s*(?:AM|PM|am|pm)[^.]*?(?:\d{1,2}(?::\d{2})?\s*(?:AM|PM|am|pm))?\b/gi,
+];
+
+// -------------------------------------------------------------------
+// Helpers
+// -------------------------------------------------------------------
+
+function extractContext(content: string, match: string, index: number): string {
+  const start = Math.max(0, index - 30);
+  const end = Math.min(content.length, index + match.length + 30);
+  return content.slice(start, end).replace(/\n/g, " ").trim();
 }
 
-/**
- * A claim is considered "risky" if it contains a very specific number that
- * would be embarrassing to get wrong in a published article.
- */
-function isRisky(claim: RawClaim): boolean {
-  const { text, type } = claim;
+function normalizeForComparison(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[,\s]+/g, " ")
+    .replace(/[–—-]/g, "-")
+    .replace(/\$/g, "")
+    .replace(/฿/g, "")
+    .trim();
+}
 
-  // All prices are risky – wrong amounts erode trust quickly.
-  if (type === 'price') return true;
+function stripFrontmatter(content: string): string {
+  const fmMatch = content.match(/^---\s*\n[\s\S]*?\n---\s*\n/);
+  return fmMatch ? content.slice(fmMatch[0].length) : content;
+}
 
-  // Statistics (percentages, large numbers) that look precise.
-  if (type === 'statistic') return true;
+function isInScrapeData(claimValue: string, scrapeData: string): boolean {
+  const normalizedClaim = normalizeForComparison(claimValue);
+  const normalizedScrape = normalizeForComparison(scrapeData);
 
-  // Distances are mostly risky; only skip very round numbers like "10 km".
-  if (type === 'distance') {
-    const num = parseFloat(text.replace(/[^\d.]/g, ''));
-    return !Number.isInteger(num) || num % 5 !== 0;
-  }
+  // Exact match
+  if (normalizedScrape.includes(normalizedClaim)) return true;
 
-  // Years: flag only those that are very old or in the future, or very specific
-  // historical claims that an LLM might hallucinate.
-  if (type === 'year') {
-    const year = parseInt(text, 10);
-    const current = new Date().getFullYear();
-    return year < 1800 || year > current || (year >= 1800 && year < 1900);
+  // For dates: also check without day-of-week parenthetical
+  const withoutDay = normalizedClaim.replace(/\s*\((?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\)/i, "");
+  if (withoutDay !== normalizedClaim && normalizedScrape.includes(withoutDay)) return true;
+
+  // For prices: extract just the number and check if it appears near currency in scrape data
+  const numMatch = claimValue.match(/[\d,]+/);
+  if (numMatch) {
+    const num = numMatch[0].replace(/,/g, "");
+    // Check if the number appears within ~20 chars of THB/baht/$
+    const numPattern = new RegExp(
+      `(?:THB|baht|\\$|฿).{0,10}${num}|${num}.{0,10}(?:THB|baht|\\$|฿)`,
+      "i"
+    );
+    if (numPattern.test(scrapeData)) return true;
   }
 
   return false;
 }
 
-function extractClaims(content: string): RawClaim[] {
-  const seen = new Set<string>();
-  const results: RawClaim[] = [];
+// -------------------------------------------------------------------
+// Main export
+// -------------------------------------------------------------------
 
-  for (const [type, pattern] of Object.entries(PATTERNS)) {
-    // Reset lastIndex in case the pattern is reused.
-    pattern.lastIndex = 0;
-    let match: RegExpExecArray | null;
-
-    while ((match = pattern.exec(content)) !== null) {
-      const text = match[0].trim();
-      const key = `${type}:${text}`;
-
-      if (!seen.has(key)) {
-        seen.add(key);
-        results.push({ text, type });
-      }
-    }
-
-    // Ensure patterns with the global flag don't carry stale lastIndex.
-    pattern.lastIndex = 0;
-  }
-
-  return results;
-}
-
-// ─── AI verification ─────────────────────────────────────────────────────────
-
-interface AIVerdict {
-  text: string;
-  flagged: boolean;
-  suggestion?: string;
-}
-
-function buildVerificationPrompt(claims: RawClaim[], topic: string): string {
-  const list = claims
-    .map((c, i) => `${i + 1}. [${c.type}] "${c.text}"`)
-    .join('\n');
-
-  return `You are a fact-checking assistant for a Mexico travel blog. The article topic is: "${topic}".
-
-Review the following claims extracted from the article and decide whether each one is likely correct, suspicious, or clearly wrong. Focus on Mexico-specific context (currency rates, geography, history, demographics).
-
-Claims to review:
-${list}
-
-Respond ONLY with a JSON array. Each element must follow this exact schema:
-{
-  "text": "<exact claim text>",
-  "flagged": <true if suspicious or wrong, false if likely correct>,
-  "suggestion": "<brief correction or note, only when flagged>"
-}
-
-Do not include any explanation outside the JSON array. If you are unsure, prefer flagged: false to avoid false positives.`;
-}
-
-async function verifyClaimsWithAI(
-  claims: RawClaim[],
-  topic: string
-): Promise<AIVerdict[]> {
-  if (claims.length === 0) return [];
-
-  const prompt = buildVerificationPrompt(claims, topic);
-
-  const raw = await generateContent(prompt, {
-    maxTokens: 1024,
-    temperature: 0.2,
-    systemPrompt:
-      'You are a precise fact-checking assistant. Respond only with valid JSON.',
-  });
-
-  // Strip markdown code fences if the model adds them.
-  const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(cleaned);
-  } catch {
-    // If parsing fails, treat all claims as unverified (not flagged).
-    console.warn('[fact-checker] Could not parse AI response as JSON:', cleaned.slice(0, 200));
-    return [];
-  }
-
-  if (!Array.isArray(parsed)) {
-    console.warn('[fact-checker] AI response was not a JSON array.');
-    return [];
-  }
-
-  return (parsed as Array<Record<string, unknown>>).map((item) => ({
-    text:       typeof item.text === 'string'       ? item.text       : '',
-    flagged:    typeof item.flagged === 'boolean'   ? item.flagged    : false,
-    suggestion: typeof item.suggestion === 'string' ? item.suggestion : undefined,
-  }));
-}
-
-// ─── Scoring ──────────────────────────────────────────────────────────────────
-
-/**
- * Score reflects how trustworthy the content appears after the check.
- *
- * 100  – no claims extracted at all (nothing to dispute)
- * 90   – claims found but none flagged
- * Decreases by a small amount per flagged claim, capped at 0.
- */
-function computeScore(total: number, flaggedCount: number): number {
-  if (total === 0) return 100;
-  const baseScore = flaggedCount === 0 ? 90 : 90;
-  const penalty = Math.min(flaggedCount * 10, 90);
-  return Math.max(0, baseScore - penalty);
-}
-
-// ─── Public API ───────────────────────────────────────────────────────────────
-
-/**
- * Check a piece of generated blog content for potentially incorrect claims.
- *
- * The function extracts numeric claims (prices, dates, statistics, distances)
- * via regex, selects the riskiest ones for AI verification, and returns a
- * structured result with a confidence score.
- *
- * @param content - The raw article text to check.
- * @param topic   - The article topic (used to give the AI relevant context).
- */
-export async function factCheckContent(
+export function factCheckPost(
   content: string,
-  topic: string
-): Promise<FactCheckResult> {
-  const rawClaims = extractClaims(content);
+  scrapeData: string | null
+): FactCheckResult {
+  const body = stripFrontmatter(content);
+  const allClaims: FactClaim[] = [];
+  const seen = new Set<string>(); // deduplicate by value
 
-  // Separate risky claims that warrant AI review from benign ones.
-  const riskyClaims  = rawClaims.filter(isRisky);
-  const benignClaims = rawClaims.filter((c) => !isRisky(c));
-
-  // Cap AI calls: when there are many risky claims, only send the first 20.
-  // This keeps latency acceptable and avoids huge prompts.
-  const MAX_AI_CLAIMS = 20;
-  const claimsToVerify = riskyClaims.slice(0, MAX_AI_CLAIMS);
-  const unverifiedRisky = riskyClaims.slice(MAX_AI_CLAIMS);
-
-  let verdicts: AIVerdict[] = [];
-
-  if (claimsToVerify.length > 0) {
-    try {
-      verdicts = await verifyClaimsWithAI(claimsToVerify, topic);
-    } catch (err) {
-      console.warn(
-        '[fact-checker] AI verification failed, skipping:',
-        err instanceof Error ? err.message : err
-      );
-    }
-  }
-
-  // Build a lookup from claim text -> verdict for quick merging.
-  const verdictMap = new Map<string, AIVerdict>(
-    verdicts.map((v) => [v.text, v])
-  );
-
-  // Assemble the final claims list.
-  const claims: Claim[] = [
-    // Verified risky claims.
-    ...claimsToVerify.map((raw): Claim => {
-      const verdict = verdictMap.get(raw.text);
-      return {
-        text:       raw.text,
-        type:       raw.type,
-        flagged:    verdict?.flagged ?? false,
-        suggestion: verdict?.suggestion,
-      };
-    }),
-    // Risky claims that exceeded the AI batch cap – mark not flagged.
-    ...unverifiedRisky.map((raw): Claim => ({
-      text:    raw.text,
-      type:    raw.type,
-      flagged: false,
-    })),
-    // Benign claims are included for completeness but never flagged.
-    ...benignClaims.map((raw): Claim => ({
-      text:    raw.text,
-      type:    raw.type,
-      flagged: false,
-    })),
+  // Extract claims by type
+  const patternGroups: Array<{ type: FactClaim["type"]; patterns: RegExp[] }> = [
+    { type: "date", patterns: DATE_PATTERNS },
+    { type: "price", patterns: PRICE_PATTERNS },
+    { type: "statistic", patterns: STATISTIC_PATTERNS },
+    { type: "time", patterns: TIME_PATTERNS },
   ];
 
-  const flaggedCount = claims.filter((c) => c.flagged).length;
-  const score = computeScore(claims.length, flaggedCount);
+  for (const { type, patterns } of patternGroups) {
+    for (const pattern of patterns) {
+      // Reset lastIndex for global regex
+      pattern.lastIndex = 0;
+      let match: RegExpExecArray | null;
+      while ((match = pattern.exec(body)) !== null) {
+        const value = match[0].trim();
+        if (!seen.has(value)) {
+          seen.add(value);
+          allClaims.push({
+            type,
+            value,
+            context: extractContext(body, value, match.index),
+          });
+        }
+      }
+    }
+  }
 
-  // cleanedContent is the original content unchanged. Callers can use the
-  // `claims` list to decide whether to re-generate or surface warnings.
-  // Applying automated edits to prose based on AI verdicts is out of scope
-  // for a sanity-check tool.
-  const cleanedContent = content;
+  // Cross-reference against scrape data
+  let verified = 0;
+  const unverified: FactClaim[] = [];
 
-  return { claims, cleanedContent, score };
+  for (const claim of allClaims) {
+    if (scrapeData && isInScrapeData(claim.value, scrapeData)) {
+      verified++;
+    } else {
+      unverified.push(claim);
+    }
+  }
+
+  // Risk level
+  const unverifiedCount = unverified.length;
+  let riskLevel: FactCheckResult["riskLevel"];
+  if (unverifiedCount <= 2) riskLevel = "low";
+  else if (unverifiedCount <= 5) riskLevel = "medium";
+  else riskLevel = "high";
+
+  return {
+    totalClaims: allClaims.length,
+    verifiedClaims: verified,
+    unverifiedClaims: unverified,
+    riskLevel,
+  };
 }
