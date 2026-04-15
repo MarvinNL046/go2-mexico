@@ -11,7 +11,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { getAutocompleteSuggestions } from './serpapi';
+import { getAutocompleteSuggestions } from './serp';
 import { loadPipelineConfig } from './pipeline-config';
 
 export interface TopicSuggestion {

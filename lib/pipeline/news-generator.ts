@@ -22,7 +22,7 @@ import fs from 'fs';
 import path from 'path';
 import { generateContent } from './ai-provider';
 import { scrapeUrl, scrapeTravelNews } from './scraper';
-import { getGoogleNews } from './serpapi';
+import { getGoogleNews } from './serp';
 import { loadPipelineConfig } from './pipeline-config';
 
 // -------------------------------------------------------------------
