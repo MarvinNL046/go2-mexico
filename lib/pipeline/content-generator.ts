@@ -2,6 +2,7 @@ import { generateContent, type AiModel } from "./ai-provider";
 import { generateBlogImage } from "./image-generator";
 import { scrapeTopicContext } from "./scraper";
 import { getSeasonalHook } from "./seasonal-context";
+import { loadPipelineConfig } from "./pipeline-config";
 import fs from "fs";
 import path from "path";
 
@@ -149,8 +150,15 @@ async function getExistingSlugsFromGitHub(): Promise<Set<string>> {
     const token = process.env.GITHUB_TOKEN;
     if (!token) throw new Error("No GITHUB_TOKEN");
 
+    // Resolve per-site repo from pipeline.config.json — critical for sister
+    // sites, otherwise every site would be checking (and committing to!)
+    // the Thailand repo.
+    const cfg = loadPipelineConfig();
+    const owner = process.env.PIPELINE_REPO_OWNER || cfg.repoOwner;
+    const name = process.env.PIPELINE_REPO_NAME || cfg.repoName;
+
     const res = await fetch(
-      "https://api.github.com/repos/MarvinNL046/go2thailand.com/contents/content/blog/en",
+      `https://api.github.com/repos/${owner}/${name}/contents/content/blog/en`,
       {
         headers: {
           Authorization: `token ${token}`,

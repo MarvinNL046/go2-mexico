@@ -1,11 +1,22 @@
 // Commit one or more files to the GitHub repo via the Contents API
 // Then triggers a Vercel redeploy via deploy hook (GitHub API commits don't trigger webhooks)
+//
+// Repo target is resolved from pipeline.config.json (per sister site) so each
+// site commits to its own repo. Overridable via env vars on Vercel if needed.
+
+import { loadPipelineConfig } from "./pipeline-config";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const VERCEL_DEPLOY_HOOK = process.env.VERCEL_DEPLOY_HOOK;
-const REPO_OWNER = "MarvinNL046";
-const REPO_NAME = "go2thailand.com";
-const BRANCH = "main";
+const BRANCH = process.env.PIPELINE_REPO_BRANCH || "main";
+
+function resolveRepo() {
+  const cfg = loadPipelineConfig();
+  return {
+    owner: process.env.PIPELINE_REPO_OWNER || cfg.repoOwner,
+    name: process.env.PIPELINE_REPO_NAME || cfg.repoName,
+  };
+}
 
 export interface FileToCommit {
   path: string;       // e.g. "content/blog/en/thai-food-guide.md"
@@ -29,7 +40,8 @@ export async function commitFilesToGitHub(
     "Content-Type": "application/json",
   };
 
-  const apiBase = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+  const { owner, name } = resolveRepo();
+  const apiBase = `https://api.github.com/repos/${owner}/${name}`;
 
   // Create blobs once (they're content-addressed, reusable across retries)
   const blobShas: { path: string; sha: string }[] = [];

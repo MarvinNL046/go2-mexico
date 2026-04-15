@@ -28,6 +28,10 @@ export interface PipelineConfig {
   newsQuery: string;
   /** Vanilla scrape fallback URLs (used when SerpAPI is unavailable). */
   scrapeNewsSources: string[];
+  /** GitHub org/user that owns this site's repo — pipeline commits go here. */
+  repoOwner: string;
+  /** GitHub repo name for this site — e.g. "go2thailand.com", "go2-bali.com". */
+  repoName: string;
 }
 
 const DEFAULT_CONFIG: PipelineConfig = {
@@ -47,6 +51,8 @@ const DEFAULT_CONFIG: PipelineConfig = {
     'https://www.thailandblog.nl/en/',
     'https://www.tatnews.org/',
   ],
+  repoOwner: 'MarvinNL046',
+  repoName: 'go2thailand.com',
 };
 
 let cached: PipelineConfig | null = null;

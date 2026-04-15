@@ -8,4 +8,7 @@
   },
   "newsQuery": "Mexico",
   "scrapeNewsSources": []
+,
+  "repoOwner": "MarvinNL046",
+  "repoName": "go2-mexico.com"
 }
