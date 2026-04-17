@@ -16,6 +16,8 @@ import {
   Compass,
 } from 'lucide-react';
 import SEOHead from '../../components/SEOHead';
+import { useGsapBlogHero } from '../../components/animations/useGsapBlogHero';
+import { useGsapScrollReveal } from '../../components/animations/useGsapScrollReveal';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { useTranslation } from '../../hooks/useTranslation';
 import { siteConfig, getAuthor } from '../../site.config';
@@ -51,6 +53,10 @@ export default function BlogPostPage({
   relatedPosts,
   contextualOffers,
 }: BlogPostPageProps) {
+
+  // GSAP entrance animations — respects prefers-reduced-motion automatically
+  const heroRef = useGsapBlogHero<HTMLElement>();
+  useGsapScrollReveal('[data-blog-content]');
   const { t } = useTranslation('common');
   const author = getAuthor(item.meta.author);
   const postUrl = `${siteConfig.seo.siteUrl}/blog/${item.meta.slug}/`;
@@ -109,7 +115,7 @@ export default function BlogPostPage({
       </SEOHead>
 
       {/* Hero Section */}
-      <section className="relative h-[35vh] md:h-[45vh] overflow-hidden">
+      <section ref={heroRef} className="relative h-[35vh] md:h-[45vh] overflow-hidden">
         <Image
           src={item.meta.heroImage || '/images/placeholder.webp'}
           alt={item.meta.title}
