@@ -9,6 +9,7 @@ export interface AffiliateLinks {
   esim: string;
   getYourGuide: string;
   klook: string;
+  viator: string;
   nordvpn: string;
   nordpass: string;
   airalo: string;
@@ -146,6 +147,7 @@ export const siteConfig: SiteConfig = {
     esim: 'https://saily.tpo.lv/rf9lidnE',
     getYourGuide: 'https://getyourguide.tpo.lv/6HngJ5FC',
     klook: 'https://klook.tpo.lv/7Dt6WApj',
+    viator: 'https://viator.tpo.lv/TUcQTS5u',
     nordvpn: 'https://nordvpn.tpo.lv/placeholder',
     nordpass: 'https://nordpass.tpo.lv/placeholder',
     airalo: 'https://airalo.tpo.lv/placeholder',

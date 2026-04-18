@@ -108,6 +108,22 @@ export default function BlogPostPage({
             }),
           }}
         />
+        {item.meta.faq && item.meta.faq.length > 0 && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'FAQPage',
+                mainEntity: item.meta.faq.map((f: { question: string; answer: string }) => ({
+                  '@type': 'Question',
+                  name: f.question,
+                  acceptedAnswer: { '@type': 'Answer', text: f.answer },
+                })),
+              }),
+            }}
+          />
+        )}
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={item.meta.updatedAt} />
         <meta property="article:modified_time" content={item.meta.updatedAt} />
