@@ -1,11 +1,11 @@
 export type AiModel =
-  | "grok-writer"      // x-ai/grok-4.1-fast via OpenRouter — newer training data, for NEW content
+  | "grok-writer"      // x-ai/grok-4-fast via OpenRouter — newer training data, for NEW content
   | "grok-translator"  // x-ai/grok-4-fast  via OpenRouter — for translation tasks
   | "claude-haiku"     // legacy fallback
   | "gpt-5-nano";      // legacy fallback
 
 const OPENROUTER_MODELS: Record<string, string> = {
-  "grok-writer": "x-ai/grok-4.1-fast",
+  "grok-writer": "x-ai/grok-4-fast",
   "grok-translator": "x-ai/grok-4-fast",
 };
 
