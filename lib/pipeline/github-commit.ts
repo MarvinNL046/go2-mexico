@@ -8,14 +8,33 @@ import { loadPipelineConfig } from "./pipeline-config";
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const VERCEL_DEPLOY_HOOK = process.env.VERCEL_DEPLOY_HOOK;
-const BRANCH = process.env.PIPELINE_REPO_BRANCH || "main";
 
 function resolveRepo() {
   const cfg = loadPipelineConfig();
   return {
     owner: process.env.PIPELINE_REPO_OWNER || cfg.repoOwner,
     name: process.env.PIPELINE_REPO_NAME || cfg.repoName,
+    branch: process.env.PIPELINE_REPO_BRANCH || cfg.branch,
   };
+}
+
+async function resolveBranch(
+  apiBase: string,
+  headers: Record<string, string>,
+  configuredBranch?: string
+): Promise<string> {
+  if (configuredBranch) return configuredBranch;
+
+  const repoRes = await fetch(apiBase, { headers });
+  if (repoRes.ok) {
+    const repoData = await repoRes.json();
+    if (typeof repoData.default_branch === "string" && repoData.default_branch) {
+      return repoData.default_branch;
+    }
+  }
+
+  console.warn("[github-commit] Could not resolve repo default branch, falling back to main");
+  return "main";
 }
 
 export interface FileToCommit {
@@ -40,8 +59,10 @@ export async function commitFilesToGitHub(
     "Content-Type": "application/json",
   };
 
-  const { owner, name } = resolveRepo();
+  const { owner, name, branch: configuredBranch } = resolveRepo();
   const apiBase = `https://api.github.com/repos/${owner}/${name}`;
+  const branch = await resolveBranch(apiBase, headers, configuredBranch);
+  console.log(`[github-commit] Target repo: ${owner}/${name}@${branch}`);
 
   // Create blobs once (they're content-addressed, reusable across retries)
   const blobShas: { path: string; sha: string }[] = [];
@@ -67,7 +88,7 @@ export async function commitFilesToGitHub(
   const MAX_RETRIES = 3;
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     // 1. Get the latest commit SHA on main
-    const refRes = await fetch(`${apiBase}/git/ref/heads/${BRANCH}`, { headers });
+    const refRes = await fetch(`${apiBase}/git/ref/heads/${branch}`, { headers });
     if (!refRes.ok) throw new Error(`Failed to get ref: ${await refRes.text()}`);
     const refData = await refRes.json();
     const latestCommitSha = refData.object.sha;
@@ -111,7 +132,7 @@ export async function commitFilesToGitHub(
     const newCommitData = await newCommitRes.json();
 
     // 5. Update the branch reference (non-force — fails if HEAD moved)
-    const updateRefRes = await fetch(`${apiBase}/git/refs/heads/${BRANCH}`, {
+    const updateRefRes = await fetch(`${apiBase}/git/refs/heads/${branch}`, {
       method: "PATCH",
       headers,
       body: JSON.stringify({

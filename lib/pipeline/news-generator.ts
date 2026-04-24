@@ -26,7 +26,8 @@ import { getGoogleNews } from './serp';
 import { loadPipelineConfig } from './pipeline-config';
 
 // -------------------------------------------------------------------
-// Sources we poll for fresh Thailand news.
+// Thailand fallback sources. Sister sites should normally use Google News via
+// cfg.newsQuery, or provide their own scrapeNewsSources in pipeline.config.json.
 // We include a mix of English-language news + ThailandBlog.nl (Dutch source
 // that translates regional news, often picks up stories the others miss).
 // -------------------------------------------------------------------
@@ -229,7 +230,11 @@ export async function harvestCandidates(): Promise<NewsCandidate[]> {
   if (candidates.length > 0) return candidates;
 
   // FALLBACK: scrape source pages directly when SerpAPI is unavailable.
-  const fallbackSources = cfg.scrapeNewsSources?.length ? cfg.scrapeNewsSources : NEWS_SOURCES;
+  const fallbackSources = cfg.scrapeNewsSources?.length
+    ? cfg.scrapeNewsSources
+    : cfg.country.toLowerCase() === 'thailand'
+      ? NEWS_SOURCES
+      : [];
   for (const sourceUrl of fallbackSources) {
     try {
       const content = await scrapeUrl(sourceUrl);
@@ -260,7 +265,10 @@ export async function harvestCandidates(): Promise<NewsCandidate[]> {
 const NEWS_CATEGORIES = ['general', 'politics', 'tourism', 'transport', 'weather', 'culture', 'food', 'business', 'safety'];
 
 function buildEnNewsPrompt(candidate: NewsCandidate, today: string): string {
-  return `You are a Thailand news writer for go2thailand.com. Write a clear, factual English news article — 500 to 800 words — about this story:
+  const cfg = loadPipelineConfig();
+  const siteUrl = `https://${cfg.hostname}`;
+
+  return `You are a ${cfg.country} news writer for ${cfg.hostname}. Write a clear, factual English news article — 500 to 800 words — about this story:
 
 HEADLINE: "${candidate.rawTitle}"
 SOURCE: ${candidate.sourceName} (${candidate.sourceUrl})
@@ -298,10 +306,10 @@ The slug after the date prefix should be 4-8 lowercase words separated by hyphen
 
 3. INTERNAL LINKS (3-5):
 Link relevant entities to existing pages where natural:
-- Cities → https://go2-thailand.com/city/<slug>/
-- Islands → https://go2-thailand.com/islands/<slug>/
-- Visa topics → https://go2-thailand.com/visa/
-- Practical info → https://go2-thailand.com/practical-info/
+- Destinations/cities → ${siteUrl}/city/<slug>/ when that page exists
+- Beaches/islands/regions → relevant ${cfg.hostname} guide pages when they exist
+- Visa topics → ${siteUrl}/visa/ when relevant
+- Practical info → ${siteUrl}/practical-info/ when relevant
 
 4. EXTERNAL LINK:
 Link the source name once in the body (e.g. "according to ${candidate.sourceName}").
@@ -316,13 +324,15 @@ Reply ONLY with the complete Markdown file — frontmatter + body. No explanatio
 }
 
 function buildNlTranslatePrompt(enContent: string, today: string, candidate: NewsCandidate): string {
-  return `You translate a Thailand news article from English to natural, idiomatic Dutch for go2thailand.com.
+  const cfg = loadPipelineConfig();
+
+  return `You translate a ${cfg.country} news article from English to natural, idiomatic Dutch for ${cfg.hostname}.
 
 RULES:
 - Preserve frontmatter structure. Translate title and description to NL. Keep slug/date/source/url unchanged.
 - Translate \`category\` value to one of: algemeen, politiek, toerisme, vervoer, weer, cultuur, eten, zakelijk, veiligheid (matching the EN value).
 - Translate body to natural NL — not literal. Use Dutch news-writing voice.
-- Add a short "Wat betekent dit voor reizigers vanuit Nederland?" angle in the closing section if relevant (KLM/Schiphol vluchten, EUR-prijzen).
+- Add a short "Wat betekent dit voor reizigers vanuit Nederland?" angle in the closing section if relevant (flights from the Netherlands, EUR-prijzen).
 - Translate tags to NL where natural ("tourism" → "toerisme", "transport" → "vervoer"). Keep proper nouns and place names.
 - Keep all URLs (internal and external) unchanged.
 - Convert any USD prices in the body to € equivalent (≈ €1 = $1.10). Keep THB intact.
@@ -351,10 +361,11 @@ function extractFrontmatterField(raw: string, field: string): string {
 export interface GenerateNewsResult {
   candidate: NewsCandidate;
   en: GeneratedNewsArticle;
-  nl: GeneratedNewsArticle;
+  nl?: GeneratedNewsArticle;
 }
 
 export async function generateNextNewsArticle(): Promise<GenerateNewsResult | null> {
+  const cfg = loadPipelineConfig();
   const candidates = await harvestCandidates();
   if (candidates.length === 0) {
     console.warn('[news-generator] No candidates harvested.');
@@ -403,6 +414,10 @@ export async function generateNextNewsArticle(): Promise<GenerateNewsResult | nu
 
   // 2. Translate to NL via Grok 4 Fast (cheaper than 4.1 for translation,
   //    proven on 250+ blog translations).
+  if (!cfg.locales.includes('nl')) {
+    return { candidate: chosen, en };
+  }
+
   const nlRaw = await generateContent(buildNlTranslatePrompt(enRaw, today, chosen), {
     model: 'grok-translator',
     maxTokens: 4000,

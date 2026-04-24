@@ -135,6 +135,55 @@ const TOPIC_BANK: Record<PostCategory, string[]> = {
   ],
 };
 
+function buildFallbackTopicBank(country: string): Record<PostCategory, string[]> {
+  if (country.toLowerCase() === "thailand") return TOPIC_BANK;
+
+  return {
+    "city-guide": [
+      `Best Places to Visit in ${country}: First-Time Travel Guide`,
+      `${country} Itinerary: How to Plan 7, 10 and 14 Days`,
+      `Hidden Gems in ${country} That Most Travelers Miss`,
+      `${country} Travel Guide: Regions, Routes and Practical Tips`,
+    ],
+    food: [
+      `What to Eat in ${country}: Local Food Guide for Travelers`,
+      `${country} Street Food and Markets: What to Try First`,
+      `Vegetarian and Vegan Food in ${country}: Practical Guide`,
+      `${country} Food Costs: Restaurants, Markets and Budget Meals`,
+    ],
+    activities: [
+      `Best Things to Do in ${country}: Experiences Worth Booking`,
+      `${country} Tours and Day Trips: What Is Worth It`,
+      `Outdoor Adventures in ${country}: Nature, Culture and Practical Tips`,
+      `${country} Attractions Guide: What to Book in Advance`,
+    ],
+    practical: [
+      `${country} Visa Requirements 2026: Complete Tourist Guide`,
+      `Getting Around ${country}: Transport, Routes and Costs`,
+      `${country} eSIM and Internet Guide for Travelers`,
+      `${country} Travel Safety: Scams, Health and Practical Advice`,
+    ],
+    budget: [
+      `${country} Travel Budget 2026: Real Daily Costs`,
+      `${country} on a Budget: Where to Save and Where to Spend`,
+      `Cheap Places to Stay in ${country}: Hostels, Guesthouses and Hotels`,
+      `How Much Does ${country} Cost? Budget vs Comfort Travel`,
+    ],
+    seasonal: [
+      `Best Time to Visit ${country}: Month-by-Month Travel Guide`,
+      `${country} Weather Guide: Seasons, Packing and Regional Differences`,
+      `${country} Festivals and Events: When to Plan Your Trip`,
+      `${country} in Peak Season vs Low Season: Honest Comparison`,
+    ],
+    islands: [
+      `Best Beaches and Islands in ${country}: Where to Go First`,
+      `${country} Coast Guide: Beach Towns, Islands and Routes`,
+      `${country} Island Hopping Guide: Routes, Costs and Tips`,
+      `Best Beach Destinations in ${country} for Different Travel Styles`,
+    ],
+  };
+}
+
 // Supported translation locales (English is source)
 const TRANSLATION_LOCALES = ["nl", "zh", "de", "fr", "ru", "ja", "ko", "th"] as const;
 export type TranslationLocale = (typeof TRANSLATION_LOCALES)[number];
@@ -274,7 +323,7 @@ async function getNextQueuedTopic(): Promise<(QueuedTopic & { category: PostCate
 // Topic selection
 // -------------------------------------------------------------------
 
-// Auto-select a Thailand travel topic, avoiding already-published ones
+// Auto-select a site-specific travel topic, avoiding already-published ones
 export async function selectTopic(
   existingTitles: string[] = [],
   preferredCategory?: PostCategory
@@ -286,26 +335,28 @@ export async function selectTopic(
     return { topic: queued.topic, category: queued.category, scrapeUrls: queued.scrapeUrls };
   }
 
+  const cfg = loadPipelineConfig();
+  const topicBank = buildFallbackTopicBank(cfg.country);
   const category =
     preferredCategory ||
-    randomFrom(Object.keys(TOPIC_BANK) as PostCategory[]);
+    randomFrom(Object.keys(topicBank) as PostCategory[]);
 
-  const candidates = TOPIC_BANK[category].filter(
+  const candidates = topicBank[category].filter(
     (t) => !existingTitles.some((existing) => existing.toLowerCase() === t.toLowerCase())
   );
 
   if (candidates.length === 0) {
     // All topics in this category are used — pick from a different one
     const otherCategory = randomFrom(
-      (Object.keys(TOPIC_BANK) as PostCategory[]).filter((c) => c !== category)
+      (Object.keys(topicBank) as PostCategory[]).filter((c) => c !== category)
     );
-    const otherCandidates = TOPIC_BANK[otherCategory].filter(
+    const otherCandidates = topicBank[otherCategory].filter(
       (t) =>
         !existingTitles.some(
           (existing) => existing.toLowerCase() === t.toLowerCase()
         )
     );
-    const topic = randomFrom(otherCandidates.length > 0 ? otherCandidates : TOPIC_BANK[otherCategory]);
+    const topic = randomFrom(otherCandidates.length > 0 ? otherCandidates : topicBank[otherCategory]);
     return { topic, category: otherCategory };
   }
 
@@ -423,7 +474,7 @@ Translate the following blog post from English to ${localeName}.
 STRICT RULES:
 1. Translate ALL body text naturally and idiomatically — do NOT be literal
 2. Translate: title, description, tags (in the YAML frontmatter), and all Markdown body content
-3. Keep UNCHANGED: slug, date, author, category, image path, all URLs (both internal go2-thailand.com links and external affiliate links), lastUpdated, sources (names and URLs)
+3. Keep UNCHANGED: slug, date, author, category, image path, all URLs (both internal links and external affiliate links), lastUpdated, sources (names and URLs)
 4. Preserve ALL Markdown formatting: headers, bold, italic, tables, blockquotes, code blocks, links
 5. Keep affiliate link text in ${localeName} but keep the URL exactly as-is
 6. Do NOT add or remove any content — translate only, do not summarize
@@ -470,7 +521,8 @@ export async function translatePostToAllLocales(
 // -------------------------------------------------------------------
 
 async function loadSitemapLinks(): Promise<string> {
-  const siteUrl = "https://go2-thailand.com";
+  const cfg = loadPipelineConfig();
+  const siteUrl = `https://${cfg.hostname}`;
 
   try {
     // Try to read from local sitemap.xml file first (faster than HTTP)
@@ -488,7 +540,7 @@ async function loadSitemapLinks(): Promise<string> {
       const response = await fetch(`${siteUrl}/sitemap.xml`, {
         signal: AbortSignal.timeout(10000),
       });
-      if (!response.ok) return FALLBACK_INTERNAL_LINKS;
+      if (!response.ok) return buildFallbackInternalLinks(cfg);
       xml = await response.text();
     }
 
@@ -547,55 +599,31 @@ async function loadSitemapLinks(): Promise<string> {
       }
       result += "\n";
     }
-    return result || FALLBACK_INTERNAL_LINKS;
+    return result || buildFallbackInternalLinks(cfg);
   } catch {
-    return FALLBACK_INTERNAL_LINKS;
+    return buildFallbackInternalLinks(cfg);
   }
 }
 
 // Fallback internal links if sitemap can't be read
-const FALLBACK_INTERNAL_LINKS = `
-city:
-- [Bangkok](https://go2-thailand.com/city/bangkok/)
-- [Chiang Mai](https://go2-thailand.com/city/chiang-mai/)
-- [Phuket](https://go2-thailand.com/city/phuket/)
-- [Krabi](https://go2-thailand.com/city/krabi/)
-- [Pai](https://go2-thailand.com/city/pai/)
-- [Chiang Rai](https://go2-thailand.com/city/chiang-rai/)
-- [Kanchanaburi](https://go2-thailand.com/city/kanchanaburi/)
-- [Hua Hin](https://go2-thailand.com/city/hua-hin/)
-
-islands:
-- [Islands Overview](https://go2-thailand.com/islands/)
-- [Koh Samui](https://go2-thailand.com/islands/koh-samui/)
-- [Koh Phangan](https://go2-thailand.com/islands/koh-phangan/)
-- [Koh Tao](https://go2-thailand.com/islands/koh-tao/)
-- [Koh Lanta](https://go2-thailand.com/islands/koh-lanta/)
-- [Koh Chang](https://go2-thailand.com/islands/koh-chang/)
-
-food:
-- [Thai Food Guide](https://go2-thailand.com/food/)
-- [Pad Thai](https://go2-thailand.com/food/pad-thai/)
-- [Tom Yum Goong](https://go2-thailand.com/food/tom-yum-goong/)
-- [Pad Krapow](https://go2-thailand.com/food/pad-krapow/)
-- [Mango Sticky Rice](https://go2-thailand.com/food/mango-sticky-rice/)
-- [Khao Soi](https://go2-thailand.com/food/khao-soi/)
-- [Green Curry](https://go2-thailand.com/food/green-curry/)
-- [Som Tam](https://go2-thailand.com/food/som-tam/)
-
-visa:
-- [Thailand Visa Guide](https://go2-thailand.com/visa/)
+function buildFallbackInternalLinks(cfg = loadPipelineConfig()): string {
+  const siteUrl = `https://${cfg.hostname}`;
+  return `
+core:
+- [${cfg.country} travel guide](${siteUrl}/)
+- [${cfg.country} blog](${siteUrl}/blog/)
 
 practical-info:
-- [Practical Info](https://go2-thailand.com/practical-info/)
-- [Thailand Weather](https://go2-thailand.com/weather/)
-- [Travel Insurance](https://go2-thailand.com/travel-insurance-thailand/)
-- [Travel Gear](https://go2-thailand.com/travel-gear/)
-- [eSIM Thailand](https://go2-thailand.com/esim/)
+- [${cfg.country} visa guide](${siteUrl}/visa/)
+- [${cfg.country} weather guide](${siteUrl}/weather/)
+- [Travel insurance for ${cfg.country}](${siteUrl}/travel-insurance/)
+- [${cfg.country} eSIM guide](${siteUrl}/esim/)
 
-blog:
-- [Blog](https://go2-thailand.com/blog/)
+planning:
+- [Transport in ${cfg.country}](${siteUrl}/transport/)
+- [Food in ${cfg.country}](${siteUrl}/food/)
 `;
+}
 
 // -------------------------------------------------------------------
 // Prompt builder
@@ -607,7 +635,9 @@ function buildPrompt(
   sitemapLinks: string,
   scrapeData: string | null
 ): string {
-  const siteUrl = "https://go2-thailand.com";
+  const cfg = loadPipelineConfig();
+  const siteUrl = `https://${cfg.hostname}`;
+  const authorName = `${cfg.siteName} Team`;
   const today = new Date().toISOString().split("T")[0];
   const year = new Date().getFullYear();
 
@@ -627,26 +657,30 @@ function buildPrompt(
   const categoryInstructions: Record<PostCategory, string> = {
     "city-guide":
       "Write an in-depth city/destination guide. Cover neighborhoods, top sights, where to eat, where to stay, and practical tips. Structure chronologically or by area. Include a 1-day and 3-day itinerary suggestion.",
-    food: "Write a comprehensive Thai food guide. Explain the dish/cuisine with cultural context, regional variations, where to find the best versions, and how to order like a local. Include a comparison table of similar dishes.",
+    food: `Write a comprehensive ${cfg.country} food guide. Explain the dish/cuisine with cultural context, regional variations, where to find the best versions, and how to order like a local. Include a comparison table of similar dishes.`,
     activities:
       "Write a detailed activities/experiences guide. Compare options (operators, prices, locations), give honest pros/cons, and include a practical booking guide at the end.",
     practical:
       "Write a thorough practical travel guide. Cover all scenarios, give exact prices and steps, and anticipate common questions. Accuracy is critical — cite official sources where possible.",
     budget:
-      "Write a realistic budget travel guide with exact costs in Thai Baht and USD. Include sample day budgets, money-saving tips, and where to splurge vs. save.",
+      "Write a realistic budget travel guide with exact costs in local currency and USD. Include sample day budgets, money-saving tips, and where to splurge vs. save.",
     seasonal:
       "Write a seasonal/festival travel guide. Cover what happens, when, where the best locations are, and how to plan. Include practical tips for crowds and booking.",
     islands:
       "Write a comprehensive island guide or comparison. Cover beaches, activities, accommodation options, how to get there, and who each island suits best.",
   };
 
-  const seasonal = getSeasonalHook();
-  const seasonalContext = `\nSEASONAL CONTEXT (use this to ground the article in the actual current moment — but never force a seasonal hook into a topic where it doesn't belong):
+  const seasonal = cfg.country.toLowerCase() === "thailand" ? getSeasonalHook() : null;
+  const seasonalContext = seasonal ? `\nSEASONAL CONTEXT (use this to ground the article in the actual current moment — but never force a seasonal hook into a topic where it doesn't belong):
 - Current month: ${seasonal.monthEn}
 - Season in Thailand: ${seasonal.seasonEn}
 - Weather in plain English: ${seasonal.weatherSummary.replace('Het is nu', 'It is now').replace(/\b(maart|april|mei|juni|juli|augustus|september|oktober|november|december|januari|februari)\b/g, seasonal.monthEn)}
 - Relevant events / hooks for the next ~60 days:
 ${seasonal.upcomingEvents.replace(/\(volgende maand\)/g, '(next month)').replace(/\(([a-z]+)\)/g, `(${seasonal.monthEn})`)}
+\n` : `\nSEASONAL CONTEXT:
+- Current month: ${new Date().toLocaleString("en-US", { month: "long" })}
+- Destination: ${cfg.country}
+- Use current-season advice only when it is directly relevant to the topic and supported by reference data or a cited source.
 \n`;
 
   const contextSection: string = scrapeData
@@ -658,8 +692,8 @@ CRITICAL: Any proper noun (restaurant name, hotel name, person's name, shop name
 ${scrapeData.slice(0, 6000)}\n`
     : `\nNO REFERENCE DATA AVAILABLE: Write only in general terms. Do NOT name any specific restaurants, hotels, venues, or people. Use generic descriptions only (e.g. "a riverside restaurant", "a local guesthouse", "a market vendor").\n`;
 
-  return `You are a senior Thailand travel writer for go2-thailand.com, a comprehensive Thailand travel resource.
-You and your team have lived in and traveled Thailand extensively — Chiang Mai for 3 years, island-hopped the south, explored the north, and navigated Bangkok as locals. You write from genuine first-hand experience.
+  return `You are a senior ${cfg.country} travel writer for ${cfg.hostname}, a comprehensive ${cfg.country} travel resource.
+You and your team research ${cfg.country} travel in depth and write practical, field-tested travel advice. Use first-hand language only when it is supported by the reference data or can be phrased as team research.
 
 Write a comprehensive, SEO-optimized blog post about: "${topic}"
 
@@ -677,7 +711,7 @@ title: "The Full Post Title"
 slug: "url-friendly-slug"
 date: "${today}"
 author:
-  name: "Go2Thailand Team"
+  name: "${authorName}"
 category: "${category}"
 tags: ["tag1", "tag2", "tag3", "tag4"]
 image: "/images/blog/SLUG.webp"
@@ -686,16 +720,14 @@ featured: false
 readingTime: 8
 lastUpdated: "${today}"
 sources:
-  - name: "Tourism Authority of Thailand"
-    url: "https://www.tourismthailand.org/"
-  - name: "Thailand Blog"
-    url: "https://thailandblog.nl/en/"
-  - name: "Lonely Planet Thailand"
-    url: "https://www.lonelyplanet.com/thailand"
+  - name: "Official ${cfg.country} tourism information"
+    url: "replace-with-relevant-official-tourism-url"
+  - name: "Lonely Planet ${cfg.country}"
+    url: "https://www.lonelyplanet.com/search?q=${encodeURIComponent(cfg.country)}"
 ---
 \`\`\`
 Replace SLUG in the image path with the actual slug value.
-Add 2-3 more relevant sources. Include 4-6 specific, relevant tags.
+Replace any placeholder source URLs with real, relevant URLs before output. Add 2-3 more relevant sources. Include 4-6 specific, relevant tags.
 
 2. OPENING PARAGRAPH:
 Hook the reader immediately. Start with a compelling fact, scene-setting description, or provocative question. **Bold the primary keyword** on first mention. 2-3 sentences max before the Key Takeaways table.
@@ -785,7 +817,7 @@ Answer here. Link to a relevant internal page for more detail.
 5-7 questions matching REAL Google "People Also Ask" queries for this topic. Write questions as users would actually type them (e.g., "How much does it cost to visit Koh Samui?" not "Cost information"). Keep answers concise (2-4 sentences) but include at least one specific fact per answer.
 
 9. CONCLUSION:
-Summarize key points, include a clear CTA linking to a relevant go2-thailand.com page, and a trust statement.
+Summarize key points, include a clear CTA linking to a relevant ${cfg.hostname} page, and a trust statement.
 
 ---
 
@@ -793,13 +825,13 @@ INTERNAL LINKING (critical for SEO — MANDATORY: include 10-15 internal links n
 - Spread links EVENLY across ALL sections — every H2 section should have at least 1 internal link
 - Use DESCRIPTIVE, keyword-rich anchor text — e.g., "our Bangkok travel guide" or "top things to do in Chiang Mai", NOT just "Bangkok" or "click here"
 - Vary anchor text: mix exact city names with longer phrases like "plan your trip to [city]" or "read our [topic] guide"
-- EVERY internal link MUST have a full URL starting with https://go2-thailand.com/. If you're unsure of the URL, use the closest match from the sitemap below or omit the link entirely.
-- Link city mentions to city guide pages: e.g., [explore our Bangkok travel guide](https://go2-thailand.com/city/bangkok/)
-- Link food mentions to food pages: e.g., [Thai street food guide](https://go2-thailand.com/food/)
-- Link island mentions to island pages: e.g., [Koh Samui island guide](https://go2-thailand.com/islands/koh-samui/)
-- Link visa/entry mentions to: [Thailand visa requirements](https://go2-thailand.com/visa/)
-- Link transport mentions to practical info: [getting around Thailand](https://go2-thailand.com/practical-info/)
-- Link eSIM/connectivity mentions to: [Thailand eSIM guide](https://go2-thailand.com/esim/)
+- EVERY internal link MUST have a full URL starting with ${siteUrl}/. If you're unsure of the URL, use the closest match from the sitemap below or omit the link entirely.
+- Link city/destination mentions to relevant destination guide pages when available.
+- Link food mentions to relevant food pages when available.
+- Link beach/island mentions to relevant coast or island pages when available.
+- Link visa/entry mentions to a relevant visa or practical guide page.
+- Link transport mentions to a relevant transport or practical info page.
+- Link eSIM/connectivity mentions to the site's eSIM guide if it exists.
 - Link to RELEVANT blog posts from the sitemap — e.g., if discussing budget, link to a budget blog post
 - DO NOT link the same URL twice with the same anchor text — vary it
 
@@ -817,7 +849,7 @@ E-E-A-T SIGNALS (critical for Google trust and AdSense approval):
 - DISCLOSURE: If the article mentions booking anything, include one sentence like: "We may earn a small commission from bookings made through our links, at no extra cost to you. This helps us keep creating free travel guides."
 
 EXTERNAL LINKING:
-Include 3-5 credible external links (TAT, Lonely Planet, bangkokpost.com, tourismthailand.org, official venue websites). Open external links in new tabs with target="_blank".
+Include 3-5 credible external links (official tourism boards, Lonely Planet, reputable local news, UNESCO, official venue websites). Open external links in new tabs with target="_blank".
 
 ---
 
@@ -844,18 +876,16 @@ STATISTICS & NUMBERS FACT-CHECK (MANDATORY — apply to EVERY number you write):
     - "X out of Y travelers recommend..." — satisfaction surveys are never general knowledge
     - "dating back X years/centuries" — only for well-documented historical facts (e.g., Ayutthaya founded 1351)
 14. SAFE statistics you CAN use (well-documented public knowledge):
-    - Thailand has ~41,000 registered Buddhist temples (National Office of Buddhism)
-    - Bangkok is one of the world's most visited cities (Mastercard GDI)
-    - Thailand's official currency is the Thai Baht (THB)
+    - Official currency, capital, major regions, and UNESCO sites when well documented
     - Specific UNESCO World Heritage Sites and their inscription years
-    - Geographic facts (country area, coastline length, number of provinces: 76+Bangkok)
-15. When in doubt, describe QUALITATIVELY instead of QUANTITATIVELY. Write "Thailand is one of Southeast Asia's most popular destinations" instead of inventing a fake visitor number. Write "many solo female travelers report feeling safe" instead of fabricating a percentage.
+    - Geographic facts from official or widely cited sources
+15. When in doubt, describe QUALITATIVELY instead of QUANTITATIVELY. Write "${cfg.country} is a popular destination for..." instead of inventing a fake visitor number. Write "many solo travelers report feeling safe" instead of fabricating a percentage.
 16. Every "Did You Know" callout MUST pass this test: could a reader Google the exact claim and find it on a reputable site within 30 seconds? If not, rewrite it without the specific number.
 
 ---
 
 TARGET LENGTH: 2500-3500 words of body content (excluding frontmatter). Longer posts rank better — aim for comprehensive coverage.
-TONE: Knowledgeable, warm, practical — like advice from a well-traveled friend who knows Thailand deeply. Avoid generic AI-sounding phrases like "Whether you're a budget backpacker or luxury traveler" or "Thailand has something for everyone". Be specific and opinionated.
+TONE: Knowledgeable, warm, practical — like advice from a well-traveled friend who knows ${cfg.country} deeply. Avoid generic AI-sounding phrases like "Whether you're a budget backpacker or luxury traveler" or "${cfg.country} has something for everyone". Be specific and opinionated.
 ${seasonalContext}${contextSection}
 
 RESPOND WITH THE COMPLETE BLOG POST — frontmatter + Markdown body only. No preamble, no explanation.`;
@@ -870,6 +900,7 @@ function parseGeneratedPost(
   topic: string,
   category: PostCategory
 ): GeneratedPost {
+  const cfg = loadPipelineConfig();
   const today = new Date().toISOString().split("T")[0];
 
   // Trim and strip any accidental code fences around the whole response
@@ -994,7 +1025,7 @@ function parseGeneratedPost(
     title,
     slug,
     date: today,
-    author: { name: "Go2Thailand Team" },
+    author: { name: `${cfg.siteName} Team` },
     category: postCategory,
     tags,
     image,

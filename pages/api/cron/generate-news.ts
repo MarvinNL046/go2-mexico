@@ -39,14 +39,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         content: en.content,
         encoding: 'utf-8' as const,
       },
-      {
+    ];
+
+    if (nl) {
+      filesToCommit.push({
         path: `content/news/nl/${nl.slug}.md`,
         content: nl.content,
         encoding: 'utf-8' as const,
-      },
-    ];
+      });
+    }
 
-    const commitMessage = `Add news (EN + NL): ${en.title}\n\nSource: ${candidate.sourceName} (${candidate.sourceUrl})\nAuto-generated via Grok writer + translator.`;
+    const commitMessage = `${nl ? 'Add news (EN + NL)' : 'Add news'}: ${en.title}\n\nSource: ${candidate.sourceName} (${candidate.sourceUrl})\nAuto-generated via Grok writer${nl ? ' + translator' : ''}.`;
 
     const commitResult = await commitFilesToGitHub(filesToCommit, commitMessage);
     console.log(`[cron/generate-news] Committed: ${commitResult.sha}`);

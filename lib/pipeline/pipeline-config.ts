@@ -32,6 +32,8 @@ export interface PipelineConfig {
   repoOwner: string;
   /** GitHub repo name for this site — e.g. "go2thailand.com", "go2-bali.com". */
   repoName: string;
+  /** Optional branch override for GitHub API commits. Defaults to the repo default branch. */
+  branch?: string;
 }
 
 const DEFAULT_CONFIG: PipelineConfig = {
