@@ -207,7 +207,7 @@ async function getExistingSlugsFromGitHub(): Promise<Set<string>> {
     const name = process.env.PIPELINE_REPO_NAME || cfg.repoName;
 
     const res = await fetch(
-      `https://api.github.com/repos/${owner}/${name}/contents/content/blog/en`,
+      `https://api.github.com/repos/${owner}/${name}/contents/content/blog`,
       {
         headers: {
           Authorization: `token ${token}`,
@@ -228,7 +228,7 @@ async function getExistingSlugsFromGitHub(): Promise<Set<string>> {
   } catch (err) {
     console.warn("[content-generator] GitHub slug check failed, falling back to filesystem:", err);
     // Fallback to local filesystem
-    const enDir = path.join(process.cwd(), "content", "blog", "en");
+    const enDir = path.join(process.cwd(), "content", "blog");
     if (fs.existsSync(enDir)) {
       for (const f of fs.readdirSync(enDir)) {
         if (f.endsWith(".md")) slugs.add(f.replace(".md", ""));
@@ -710,8 +710,7 @@ Generate valid YAML frontmatter with these exact fields:
 title: "The Full Post Title"
 slug: "url-friendly-slug"
 date: "${today}"
-author:
-  name: "${authorName}"
+author: "${authorName}"
 category: "${category}"
 tags: ["tag1", "tag2", "tag3", "tag4"]
 image: "/images/blog/SLUG.webp"
@@ -966,6 +965,13 @@ function parseGeneratedPost(
 
   // Clean up excessive blank lines left by removals
   content = content.replace(/\n{4,}/g, '\n\n\n');
+
+  // Mexico's blog pages render `author` as a string via lib/content.ts.
+  // Normalize model output so generated posts do not break prerendering.
+  content = content.replace(
+    /^author:\s*\n\s*name:\s*["']?(.+?)["']?\s*$/m,
+    'author: "$1"'
+  );
 
   // Extract YAML frontmatter
   const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---/);

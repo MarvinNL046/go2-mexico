@@ -2,8 +2,7 @@
 title: "Mexico Tours and Day Trips: What Is Worth It"
 slug: "mexico-tours-day-trips-worth-it"
 date: "2026-04-24"
-author:
-  name: "Go2Mexico Team"
+author: "Go2Mexico Team"
 category: "activities"
 tags: ["mexico tours", "day trips mexico", "guided tours", "cenotes", "archaeological sites", "travel value"]
 image: "/images/blog/mexico-tours-day-trips-worth-it.webp"

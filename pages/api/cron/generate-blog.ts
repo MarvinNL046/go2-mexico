@@ -53,7 +53,7 @@ export default async function handler(
     post.content = contentWithAffiliates;
 
     filesToCommit.push({
-      path: `content/blog/en/${post.slug}.md`,
+      path: `content/blog/${post.slug}.md`,
       content: post.content,
       encoding: "utf-8",
     });
