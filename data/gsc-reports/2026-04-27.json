@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-04-27T05:00:12.589Z",
+  "period": {
+    "recent": "2026-04-17 to 2026-04-24",
+    "previous": "2026-04-10 to 2026-04-17"
+  },
+  "summary": {
+    "totalClicks": 2,
+    "totalImpressions": 2066,
+    "avgCTR": 0.1,
+    "avgPosition": 46.1,
+    "uniqueQueries": 770,
+    "uniquePages": 193
+  },
+  "cannibalization": [
+    {
+      "query": "phuket",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/phuket/",
+          "clicks": 0,
+          "impressions": 27,
+          "position": 67.44444444444444
+        },
+        {
+          "page": "https://go2-thailand.com/ja/city/phuket/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 82
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/ko/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 29
+        },
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 20,
+          "position": 73.7
+        }
+      ]
+    },
+    {
+      "query": "thai beverages",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/fr/drinks/",
+          "clicks": 0,
+          "impressions": 11,
+          "position": 42
+        },
+        {
+          "page": "https://go2-thailand.com/drinks/",
+          "clicks": 0,
+          "impressions": 4,
+          "position": 52.75
+        }
+      ]
+    },
+    {
+      "query": "thailand beverages",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/fr/drinks/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 10.4
+        },
+        {
+          "page": "https://go2-thailand.com/drinks/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 10.666666666666666
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
