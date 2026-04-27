@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-04-27T05:30:04.164Z",
+  "propertyId": "490597931",
+  "period": {
+    "start": "2026-03-30",
+    "end": "2026-04-26",
+    "days": 28
+  },
+  "totals": {
+    "sessions": 0,
+    "engagedSessions": 0,
+    "avgEngagementSec": 0,
+    "pageviews": 0
+  },
+  "topPages": [],
+  "topByEngagement": [],
+  "underperformers": [],
+  "localeSplit": []
+}
