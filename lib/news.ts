@@ -15,7 +15,7 @@ export interface NewsArticle {
     name: string;
     url: string;
     originalTitle?: string;
-  };
+  } | null;
   contentHtml?: string;
 }
 
@@ -42,7 +42,7 @@ export function getAllNews(locale: string = 'en'): NewsArticle[] {
       date: data.date ? String(data.date) : '',
       category: data.category || 'general',
       tags: data.tags || [],
-      source: data.source || undefined,
+      source: data.source || null,
     } as NewsArticle;
   });
   return articles.sort((a, b) => b.date.localeCompare(a.date));
@@ -84,7 +84,7 @@ export async function getNewsBySlug(slug: string, locale: string = 'en'): Promis
     date: data.date ? String(data.date) : '',
     category: data.category || 'general',
     tags: data.tags || [],
-    source: data.source || undefined,
+    source: data.source || null,
     contentHtml,
   };
 }
