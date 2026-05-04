@@ -1,0 +1,172 @@
+{
+  "generatedAt": "2026-05-04T05:00:32.334Z",
+  "period": {
+    "recent": "2026-04-24 to 2026-05-01",
+    "previous": "2026-04-17 to 2026-04-24"
+  },
+  "summary": {
+    "totalClicks": 3,
+    "totalImpressions": 2816,
+    "avgCTR": 0.1,
+    "avgPosition": 47.3,
+    "uniqueQueries": 951,
+    "uniquePages": 258
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 12,
+          "position": 62.833333333333336
+        },
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 20,
+          "position": 63
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs bangkok opening hours 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 28,
+          "position": 6.964285714285714
+        },
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 8
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs ratchada opening hours 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 26,
+          "position": 5.615384615384615
+        },
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 6.5
+        }
+      ]
+    },
+    {
+      "query": "food market bangkok",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/best-street-food-markets-bangkok/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 38.142857142857146
+        },
+        {
+          "page": "https://go2-thailand.com/nl/blog/best-street-food-markets-bangkok/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 70.33333333333333
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/ko/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 75
+        },
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 20,
+          "position": 78.5
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs night market",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 5,
+          "position": 23.8
+        },
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 13,
+          "position": 29.615384615384617
+        }
+      ]
+    },
+    {
+      "query": "best hotels in koh samui for couples",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/best-hotels/koh-samui/couples/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 37
+        },
+        {
+          "page": "https://go2-thailand.com/where-to-stay/koh-samui/couples/",
+          "clicks": 0,
+          "impressions": 14,
+          "position": 37.5
+        }
+      ]
+    },
+    {
+      "query": "jodd fair night market",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 26.5
+        },
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 12,
+          "position": 33.083333333333336
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 54.3
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 81
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
