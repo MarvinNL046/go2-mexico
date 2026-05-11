@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-05-11T05:00:14.605Z",
+  "period": {
+    "recent": "2026-05-01 to 2026-05-08",
+    "previous": "2026-04-24 to 2026-05-01"
+  },
+  "summary": {
+    "totalClicks": 15,
+    "totalImpressions": 3333,
+    "avgCTR": 0.5,
+    "avgPosition": 42.7,
+    "uniqueQueries": 965,
+    "uniquePages": 222
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/destinations/chiang-mai/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 35
+        },
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 62,
+          "position": 65.45161290322581
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 7,
+          "position": 74.57142857142857
+        }
+      ]
+    },
+    {
+      "query": "beachfront hotel phuket",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/best-hotels/phuket/beachfront/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 28
+        },
+        {
+          "page": "https://go2-thailand.com/best-hotels/phuket/beachfront/",
+          "clicks": 0,
+          "impressions": 40,
+          "position": 53.9
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 31,
+          "position": 58.16129032258065
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 80.5
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs bangkok opening hours 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 4,
+          "position": 7.25
+        },
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 7.380952380952381
+        }
+      ]
+    },
+    {
+      "query": "food market bangkok",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/best-street-food-markets-bangkok/",
+          "clicks": 0,
+          "impressions": 18,
+          "position": 43.94444444444444
+        },
+        {
+          "page": "https://go2-thailand.com/nl/blog/best-street-food-markets-bangkok/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 83
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs ratchada opening hours 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 5.5
+        },
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 16,
+          "position": 6.375
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs ratchada official hours 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 5
+        },
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 16,
+          "position": 5.25
+        }
+      ]
+    },
+    {
+      "query": "go2phuket",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 12.5
+        },
+        {
+          "page": "https://go2-thailand.com/social/",
+          "clicks": 0,
+          "impressions": 6,
+          "position": 15.166666666666666
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs night market",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 25.666666666666668
+        },
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 13,
+          "position": 31
+        }
+      ]
+    },
+    {
+      "query": "jodd fairs bangkok official 2025",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 7.7
+        },
+        {
+          "page": "https://go2-thailand.com/nl/blog/jodd-fairs-bangkok-night-market-guide/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 11
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
