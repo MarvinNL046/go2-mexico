@@ -1,0 +1,138 @@
+{
+  "generatedAt": "2026-05-18T05:00:15.421Z",
+  "period": {
+    "recent": "2026-05-08 to 2026-05-15",
+    "previous": "2026-05-01 to 2026-05-08"
+  },
+  "summary": {
+    "totalClicks": 6,
+    "totalImpressions": 3378,
+    "avgCTR": 0.2,
+    "avgPosition": 48.3,
+    "uniqueQueries": 963,
+    "uniquePages": 196
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 55,
+          "position": 61.10909090909091
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 6,
+          "position": 78.66666666666667
+        }
+      ]
+    },
+    {
+      "query": "beachfront hotel phuket",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/best-hotels/phuket/beachfront/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 28
+        },
+        {
+          "page": "https://go2-thailand.com/best-hotels/phuket/beachfront/",
+          "clicks": 0,
+          "impressions": 59,
+          "position": 54.13559322033898
+        }
+      ]
+    },
+    {
+      "query": "ethical elephant sanctuary thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 13,
+          "position": 61.23076923076923
+        },
+        {
+          "page": "https://go2-thailand.com/blog/ethical-elephant-sanctuaries-thailand-2026-guide/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 86.47368421052632
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 23,
+          "position": 62.21739130434783
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 69.5
+        }
+      ]
+    },
+    {
+      "query": "food market bangkok",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/best-street-food-markets-bangkok/",
+          "clicks": 0,
+          "impressions": 23,
+          "position": 43.65217391304348
+        },
+        {
+          "page": "https://go2-thailand.com/nl/blog/best-street-food-markets-bangkok/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 54
+        }
+      ]
+    },
+    {
+      "query": "elephant nature park chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 42.2
+        },
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/attractions/elephant-nature-park/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 65
+        }
+      ]
+    },
+    {
+      "query": "elephant park chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/attractions/elephant-nature-park/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 25
+        },
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 49.6
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
