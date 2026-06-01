@@ -1,0 +1,121 @@
+{
+  "generatedAt": "2026-06-01T05:00:00.792Z",
+  "period": {
+    "recent": "2026-05-22 to 2026-05-29",
+    "previous": "2026-05-15 to 2026-05-22"
+  },
+  "summary": {
+    "totalClicks": 9,
+    "totalImpressions": 3854,
+    "avgCTR": 0.2,
+    "avgPosition": 47,
+    "uniqueQueries": 977,
+    "uniquePages": 188
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 99,
+          "position": 44.525252525252526
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 15,
+          "position": 85.33333333333333
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuary chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 42
+        },
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 35,
+          "position": 58.34285714285714
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 30,
+          "position": 47.166666666666664
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 70
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 4,
+          "position": 67
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 82.47619047619048
+        }
+      ]
+    },
+    {
+      "query": "chiang mai elephant sanctuary",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 47
+        },
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 16,
+          "position": 55.125
+        }
+      ]
+    },
+    {
+      "query": "elephant park chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 48.5
+        },
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/attractions/elephant-nature-park/",
+          "clicks": 0,
+          "impressions": 12,
+          "position": 52.166666666666664
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
