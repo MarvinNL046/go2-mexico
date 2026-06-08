@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-06-08T05:00:25.945Z",
+  "period": {
+    "recent": "2026-05-29 to 2026-06-05",
+    "previous": "2026-05-22 to 2026-05-29"
+  },
+  "summary": {
+    "totalClicks": 7,
+    "totalImpressions": 3580,
+    "avgCTR": 0.2,
+    "avgPosition": 42.7,
+    "uniqueQueries": 988,
+    "uniquePages": 190
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 106,
+          "position": 41.320754716981135
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 12,
+          "position": 82.41666666666667
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 32,
+          "position": 45.84375
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 76
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 60
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 18,
+          "position": 85.33333333333333
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
