@@ -1,0 +1,121 @@
+{
+  "generatedAt": "2026-06-15T05:00:36.751Z",
+  "period": {
+    "recent": "2026-06-05 to 2026-06-12",
+    "previous": "2026-05-29 to 2026-06-05"
+  },
+  "summary": {
+    "totalClicks": 7,
+    "totalImpressions": 3502,
+    "avgCTR": 0.2,
+    "avgPosition": 46.3,
+    "uniqueQueries": 964,
+    "uniquePages": 203
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 88,
+          "position": 40.875
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 14,
+          "position": 89.21428571428571
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuary chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 40,
+          "position": 51.55
+        },
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 59
+        }
+      ]
+    },
+    {
+      "query": "chiang mai elephant sanctuary",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 29,
+          "position": 48.827586206896555
+        },
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 61
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 5,
+          "position": 55.8
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 87.57142857142857
+        }
+      ]
+    },
+    {
+      "query": "best hotel bangkok",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/best-hotels/bangkok/luxury/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 51
+        },
+        {
+          "page": "https://go2-thailand.com/best-hotels/bangkok/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 58.142857142857146
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 46.421052631578945
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 74.33333333333333
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
