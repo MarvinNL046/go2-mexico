@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-06-22T05:00:13.971Z",
+  "period": {
+    "recent": "2026-06-12 to 2026-06-19",
+    "previous": "2026-06-05 to 2026-06-12"
+  },
+  "summary": {
+    "totalClicks": 2,
+    "totalImpressions": 3261,
+    "avgCTR": 0.1,
+    "avgPosition": 53.7,
+    "uniqueQueries": 961,
+    "uniquePages": 187
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 88,
+          "position": 32.73863636363636
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 15,
+          "position": 89.8
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuary chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 43,
+          "position": 56.53488372093023
+        },
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 59
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 7,
+          "position": 59.142857142857146
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 85.28571428571429
+        }
+      ]
+    },
+    {
+      "query": "chiang mai elephant sanctuary",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 24,
+          "position": 51.416666666666664
+        },
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 61
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 18,
+          "position": 44.55555555555556
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 72
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
