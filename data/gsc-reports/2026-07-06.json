@@ -1,0 +1,113 @@
+{
+  "generatedAt": "2026-07-06T05:00:05.472Z",
+  "period": {
+    "recent": "2026-06-26 to 2026-07-03",
+    "previous": "2026-06-19 to 2026-06-26"
+  },
+  "summary": {
+    "totalClicks": 14,
+    "totalImpressions": 4010,
+    "avgCTR": 0.3,
+    "avgPosition": 50.7,
+    "uniqueQueries": 983,
+    "uniquePages": 199
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 111,
+          "position": 35.513513513513516
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 84.85714285714286
+        }
+      ]
+    },
+    {
+      "query": "el nino thailand 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 1,
+          "impressions": 18,
+          "position": 5.833333333333333
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 15,
+          "position": 9.333333333333334
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 27,
+          "position": 50.370370370370374
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 73
+        }
+      ]
+    },
+    {
+      "query": "el nino 2026 thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 1,
+          "impressions": 14,
+          "position": 6.071428571428571
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 12,
+          "position": 8.666666666666668
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 7,
+          "position": 57.857142857142854
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 82.42105263157895
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": [
+    {
+      "page": "https://go2-thailand.com/blog/durian-season-thailand-2026-where-to-eat-buy-guide/",
+      "query": "durian season thailand",
+      "impressions": 59,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.8
+    }
+  ]
+}
