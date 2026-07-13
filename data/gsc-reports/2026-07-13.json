@@ -1,0 +1,161 @@
+{
+  "generatedAt": "2026-07-13T05:00:45.524Z",
+  "period": {
+    "recent": "2026-07-03 to 2026-07-10",
+    "previous": "2026-06-26 to 2026-07-03"
+  },
+  "summary": {
+    "totalClicks": 11,
+    "totalImpressions": 3954,
+    "avgCTR": 0.3,
+    "avgPosition": 49.9,
+    "uniqueQueries": 969,
+    "uniquePages": 211
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 125,
+          "position": 37.6
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 84.73684210526316
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/top-10-attractions/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 89
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 30,
+          "position": 49.3
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 80
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 9,
+          "position": 69.22222222222223
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 79.21052631578948
+        }
+      ]
+    },
+    {
+      "query": "chiang mai elephant sanctuary",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 44
+        },
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 26,
+          "position": 48.34615384615385
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuary in chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 40
+        },
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 50.42857142857143
+        }
+      ]
+    },
+    {
+      "query": "el nino thailand 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 6,
+          "position": 6.666666666666667
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 14,
+          "position": 10.642857142857142
+        }
+      ]
+    },
+    {
+      "query": "click2go thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/",
+          "clicks": 0,
+          "impressions": 15,
+          "position": 14.866666666666667
+        },
+        {
+          "page": "https://go2-thailand.com/fr/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 39
+        }
+      ]
+    },
+    {
+      "query": "ban krut thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/ban-krut-beach-guide-hidden-gem-prachuap-2026/",
+          "clicks": 0,
+          "impressions": 14,
+          "position": 13.642857142857142
+        },
+        {
+          "page": "https://go2-thailand.com/city/ban-krut/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 55
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
