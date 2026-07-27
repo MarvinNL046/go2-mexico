@@ -1,0 +1,156 @@
+{
+  "generatedAt": "2026-07-27T05:01:06.119Z",
+  "period": {
+    "recent": "2026-07-17 to 2026-07-24",
+    "previous": "2026-07-10 to 2026-07-17"
+  },
+  "summary": {
+    "totalClicks": 10,
+    "totalImpressions": 4127,
+    "avgCTR": 0.2,
+    "avgPosition": 46.7,
+    "uniqueQueries": 971,
+    "uniquePages": 175
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 12,
+          "position": 39.166666666666664
+        },
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 91,
+          "position": 41.23076923076923
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/top-10-attractions/",
+          "clicks": 0,
+          "impressions": 14,
+          "position": 88.21428571428571
+        }
+      ]
+    },
+    {
+      "query": "best elephant sanctuary in thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 36,
+          "position": 35.05555555555556
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 7,
+          "position": 35.857142857142854
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/things-to-do/ayutthaya/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 20
+        },
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 12,
+          "position": 66.91666666666667
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 20,
+          "position": 70.95
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 40.38095238095238
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 62
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/top-10-attractions/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 100
+        }
+      ]
+    },
+    {
+      "query": "el nino thailand 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 5,
+          "position": 6.2
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 11,
+          "position": 11
+        }
+      ]
+    },
+    {
+      "query": "el nino 2026 thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 5,
+          "position": 7.4
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 2,
+          "impressions": 10,
+          "position": 9.7
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": [
+    {
+      "page": "https://go2-thailand.com/drinks/",
+      "query": "thai drinks",
+      "impressions": 72,
+      "clicks": 2,
+      "ctr": 2.8,
+      "position": 10.8
+    },
+    {
+      "page": "https://go2-thailand.com/blog/durian-season-thailand-2026-where-to-eat-buy-guide/",
+      "query": "durian season thailand",
+      "impressions": 55,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.6
+    }
+  ]
+}
