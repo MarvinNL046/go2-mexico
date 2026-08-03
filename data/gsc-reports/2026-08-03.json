@@ -1,0 +1,227 @@
+{
+  "generatedAt": "2026-08-03T05:00:39.579Z",
+  "period": {
+    "recent": "2026-07-24 to 2026-07-31",
+    "previous": "2026-07-17 to 2026-07-24"
+  },
+  "summary": {
+    "totalClicks": 21,
+    "totalImpressions": 4401,
+    "avgCTR": 0.5,
+    "avgPosition": 47.1,
+    "uniqueQueries": 962,
+    "uniquePages": 190
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 86,
+          "position": 47.05813953488372
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 73
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/top-10-attractions/",
+          "clicks": 0,
+          "impressions": 15,
+          "position": 89.6
+        }
+      ]
+    },
+    {
+      "query": "ethical elephant sanctuary thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 21,
+          "position": 39.76190476190476
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 33,
+          "position": 50.78787878787879
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuary thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 30,
+          "position": 53.7
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 22,
+          "position": 54.09090909090909
+        }
+      ]
+    },
+    {
+      "query": "el nino thailand 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 8,
+          "position": 6
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 1,
+          "impressions": 38,
+          "position": 9.236842105263158
+        }
+      ]
+    },
+    {
+      "query": "best elephant sanctuary in thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 33,
+          "position": 36.63636363636363
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 13,
+          "position": 41.92307692307692
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 37.10526315789474
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 4,
+          "position": 65.25
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/top-10-attractions/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 96
+        }
+      ]
+    },
+    {
+      "query": "el nino 2026 thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 5.333333333333333
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 1,
+          "impressions": 20,
+          "position": 9.65
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuaries in thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 6,
+          "position": 41.333333333333336
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 17,
+          "position": 47.11764705882353
+        }
+      ]
+    },
+    {
+      "query": "ethical elephant sanctuary",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 11,
+          "position": 46.27272727272727
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 6,
+          "position": 54.833333333333336
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/things-to-do/ayutthaya/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 20
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 15,
+          "position": 84.13333333333334
+        }
+      ]
+    },
+    {
+      "query": "chiang mai thailand elephant nature park",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/attractions/elephant-nature-park/",
+          "clicks": 0,
+          "impressions": 13,
+          "position": 40.46153846153846
+        },
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 50
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": [
+    {
+      "page": "https://go2-thailand.com/blog/durian-season-thailand-2026-where-to-eat-buy-guide/",
+      "query": "durian season thailand",
+      "impressions": 50,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.2
+    }
+  ]
+}
