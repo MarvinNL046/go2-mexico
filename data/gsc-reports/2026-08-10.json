@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-08-10T05:00:40.619Z",
+  "period": {
+    "recent": "2026-07-31 to 2026-08-07",
+    "previous": "2026-07-24 to 2026-07-31"
+  },
+  "summary": {
+    "totalClicks": 25,
+    "totalImpressions": 4402,
+    "avgCTR": 0.6,
+    "avgPosition": 47.7,
+    "uniqueQueries": 943,
+    "uniquePages": 216
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 41,
+          "position": 57.02439024390244
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/top-10-attractions/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 93.3157894736842
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 5,
+          "position": 96.6
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuary thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 13,
+          "position": 53.76923076923077
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 29,
+          "position": 57.51724137931034
+        }
+      ]
+    },
+    {
+      "query": "el nino thailand 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 2,
+          "impressions": 6,
+          "position": 5.166666666666667
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 2,
+          "impressions": 35,
+          "position": 8.8
+        }
+      ]
+    },
+    {
+      "query": "ethical elephant sanctuary thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 4,
+          "position": 48.75
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 32,
+          "position": 52.25
+        },
+        {
+          "page": "https://go2-thailand.com/blog/ethical-elephant-sanctuaries-thailand-2026-guide/",
+          "clicks": 0,
+          "impressions": 3,
+          "position": 80.33333333333333
+        }
+      ]
+    },
+    {
+      "query": "best pool villa in phuket",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/phuket-luxury-villas/private-pool/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 53
+        },
+        {
+          "page": "https://go2-thailand.com/private-pool-villa-phuket/",
+          "clicks": 0,
+          "impressions": 34,
+          "position": 64.79411764705883
+        }
+      ]
+    },
+    {
+      "query": "el nino 2026 thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 1,
+          "impressions": 8,
+          "position": 5.125
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 26,
+          "position": 8.846153846153847
+        }
+      ]
+    },
+    {
+      "query": "best elephant sanctuary in thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 10,
+          "position": 39.2
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 23,
+          "position": 45.73913043478261
+        }
+      ]
+    },
+    {
+      "query": "ayutthaya",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 57
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 17,
+          "position": 88
+        },
+        {
+          "page": "https://go2-thailand.com/nl/nl/city/ayutthaya/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 96
+        }
+      ]
+    },
+    {
+      "query": "elephant sanctuaries in thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand",
+          "clicks": 0,
+          "impressions": 16,
+          "position": 47.9375
+        },
+        {
+          "page": "https://go2-thailand.com/best-elephant-sanctuaries-in-thailand/",
+          "clicks": 0,
+          "impressions": 2,
+          "position": 50.5
+        }
+      ]
+    }
+  ],
+  "contentDecay": [],
+  "quickWins": []
+}
