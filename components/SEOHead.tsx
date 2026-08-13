@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import { siteConfig } from '../site.config';
 
@@ -40,6 +41,16 @@ export default function SEOHead({
   noIndex,
   children,
 }: SEOHeadProps) {
+  const router = useRouter();
+
+  // Only three of twenty-nine pages passed canonicalUrl, so nearly the whole
+  // site shipped without one while apex and www both serve it. Fall back to the
+  // route actually being rendered. During prerender asPath can still hold the
+  // unsubstituted pattern ("/city/[slug]"); emitting that would be worse than
+  // none, so those fall through to no canonical as before.
+  const routePath = router?.asPath?.split(/[?#]/)[0];
+  const resolvedCanonical =
+    canonicalUrl ?? (routePath && !routePath.includes('[') ? routePath : undefined);
   const siteUrl = siteConfig.seo.siteUrl;
   const fullOgImage = ogImage
     ? ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`
@@ -74,7 +85,7 @@ export default function SEOHead({
         },
         mainEntityOfPage: {
           '@type': 'WebPage',
-          '@id': canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl,
+          '@id': resolvedCanonical ? `${siteUrl}${resolvedCanonical}` : siteUrl,
         },
       }
     : null;
@@ -118,7 +129,7 @@ export default function SEOHead({
       )}
 
       {/* Canonical */}
-      {canonicalUrl && <link rel="canonical" href={`${siteUrl}${canonicalUrl}`} />}
+      {resolvedCanonical && <link rel="canonical" href={`${siteUrl}${resolvedCanonical}`} />}
 
       {/* No index */}
       {noIndex && <meta name="robots" content="noindex,nofollow" />}
