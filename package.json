@@ -14,7 +14,8 @@
     "verify:sitemap": "npx tsx scripts/verify-sitemap.ts",
     "verify:links": "npx tsx scripts/verify-links.ts",
     "verify:all": "npm run verify && npm run sitemap && npm run verify:sitemap && npm run verify:links",
-    "content:build": "npm run verify && npm run sitemap && npm run verify:sitemap"
+    "content:build": "npm run verify && npm run sitemap && npm run verify:sitemap",
+    "data:sitemap:verify": "node lib/verify-sitemap.js"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
