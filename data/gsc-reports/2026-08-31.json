@@ -1,0 +1,173 @@
+{
+  "generatedAt": "2026-08-31T05:00:21.974Z",
+  "period": {
+    "recent": "2026-08-21 to 2026-08-28",
+    "previous": "2026-08-14 to 2026-08-21"
+  },
+  "summary": {
+    "totalClicks": 26,
+    "totalImpressions": 4493,
+    "avgCTR": 0.6,
+    "avgPosition": 49.2,
+    "uniqueQueries": 970,
+    "uniquePages": 198
+  },
+  "cannibalization": [
+    {
+      "query": "chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 23,
+          "position": 57.78260869565217
+        },
+        {
+          "page": "https://go2-thailand.com/nl/city/chiang-mai/",
+          "clicks": 0,
+          "impressions": 26,
+          "position": 87.57692307692308
+        }
+      ]
+    },
+    {
+      "query": "el nino thailand 2026",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 1,
+          "impressions": 11,
+          "position": 3
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 2,
+          "impressions": 31,
+          "position": 8.967741935483872
+        }
+      ]
+    },
+    {
+      "query": "elephant nature park",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 3
+        },
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/attractions/elephant-nature-park/",
+          "clicks": 0,
+          "impressions": 35,
+          "position": 39.714285714285715
+        }
+      ]
+    },
+    {
+      "query": "day trips from phuket",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/blog/15-best-day-trips-from-phuket-islands-nature-adventures",
+          "clicks": 0,
+          "impressions": 4,
+          "position": 66.5
+        },
+        {
+          "page": "https://go2-thailand.com/blog/15-best-day-trips-from-phuket-islands-nature-adventures/",
+          "clicks": 0,
+          "impressions": 22,
+          "position": 68.77272727272727
+        }
+      ]
+    },
+    {
+      "query": "el nino 2026 thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 2,
+          "impressions": 10,
+          "position": 4.4
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 0,
+          "impressions": 15,
+          "position": 8.8
+        }
+      ]
+    },
+    {
+      "query": "best pool villa in phuket",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/private-pool-villa-phuket/",
+          "clicks": 0,
+          "impressions": 19,
+          "position": 59.89473684210526
+        },
+        {
+          "page": "https://go2-thailand.com/phuket-luxury-villas/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 66
+        }
+      ]
+    },
+    {
+      "query": "el nino thailand",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 5,
+          "impressions": 11,
+          "position": 3.6363636363636362
+        },
+        {
+          "page": "https://go2-thailand.com/blog/el-nino-2026-thailand-weather-heatwave-travel-tips/",
+          "clicks": 1,
+          "impressions": 4,
+          "position": 12.5
+        }
+      ]
+    },
+    {
+      "query": "elephant nature park chiang mai",
+      "pages": [
+        {
+          "page": "https://go2-thailand.com/nl/chiang-mai-elephant-sanctuary/",
+          "clicks": 0,
+          "impressions": 1,
+          "position": 38
+        },
+        {
+          "page": "https://go2-thailand.com/city/chiang-mai/attractions/elephant-nature-park/",
+          "clicks": 0,
+          "impressions": 13,
+          "position": 38.92307692307692
+        }
+      ]
+    }
+  ],
+  "contentDecay": [
+    {
+      "page": "https://go2-thailand.com/drinks/",
+      "query": "thai drinks",
+      "recentClicks": 1,
+      "previousClicks": 5,
+      "dropPercent": 80,
+      "recentPosition": 9.17283950617284
+    }
+  ],
+  "quickWins": [
+    {
+      "page": "https://go2-thailand.com/drinks/",
+      "query": "thai drinks",
+      "impressions": 81,
+      "clicks": 1,
+      "ctr": 1.2,
+      "position": 9.2
+    }
+  ]
+}
